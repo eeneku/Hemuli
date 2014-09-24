@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define NUM_OF_HEROES 5
-
 struct hero
 {
 	char name[25];
@@ -12,22 +10,99 @@ struct hero
 	int intelligence;
 };
 
+void introkuva();
+int paavalikko();
+int luonti();
+int esikatselu(hahmoID);
+int hahmonMuokkaus(hahmoID);
+int tiedonMuokkaus(hahmoID);
+int selaus();
+int lataus();
+int tallennus();
+int poisto(hahmoID);
+
 int main()
 {
-	srand(time(NULL));
-
-	struct hero heroes[NUM_OF_HEROES];
-
-	for (int i = 0; i < NUM_OF_HEROES; i++)
+	int valinta = 0;
+	introkuva();
+	do
 	{
-		sprintf_s(heroes[i].name, 8, "%d. hero", i + 1);
+		switch (valinta)
+		{
+		case 0:
+		{
+			valinta = paavalikko();
+			break;
+		}
+		case 1:					//Luonti
+		{
 
-		heroes[i].strength = rand() % 10 + 1;
-		heroes[i].dexterity = rand() % 10 + 1;
-		heroes[i].intelligence = rand() % 10 + 1;
+		}
+		case 2:					//Selaus
+		{
 
-		printf("%s\nStrength: %d\nDexterity: %d\nIntelligence: %d\n\n", heroes[i].name, heroes[i].strength, heroes[i].dexterity, heroes[i].intelligence);
-	}
+		}
+		case 3: break;			// Lopetus
+		}
+	} while (valinta != 3);		// Ohjelman lopetus
 
 	return 0;
+}
+
+void introkuva()
+{
+
+}
+
+int paavalikko()
+{
+	int valinta = 0;
+	printf("Hemuli-hahmonluontityökalu!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
+	scanf_s("%d", &valinta);
+	return valinta;
+}
+
+int luonti()
+{
+	printf("Hahmonluonti\n\nM: Muokkaus");
+
+	return esikatselu(0);
+}
+
+int esikatselu(int hahmoID)
+{
+	printf("Hahmon esikatselu.");
+
+}
+
+int hahmonMuokkaus(int hahmoID)
+{
+	printf("Hahmonmuokkaus");
+
+}
+
+int tiedonMuokkaus(int hahmoID)
+{
+	printf("Muuta hahmon tietoja.");
+}
+
+int selaus()
+{
+	printf("Selaa luotuja hahmoja.");
+}
+
+int lataus()
+{
+
+}
+
+int tallennus()
+{
+
+}
+
+int poisto(int hahmoID)
+{
+	printf("Oletko varma etta haluat poistaa hahmon? Y/N >");
+	scanf_s("%d", &poisto);
 }
