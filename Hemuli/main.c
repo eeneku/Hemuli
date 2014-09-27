@@ -36,11 +36,13 @@ int main()
 		}
 		case 1:					//Luonti
 		{
-
+			valinta = luonti();
+			break;
 		}
 		case 2:					//Selaus
 		{
-
+			valinta = selaus();
+			break;
 		}
 		case 3: break;			// Lopetus
 		}
@@ -64,38 +66,44 @@ void introkuva()
 int paavalikko()
 {
 	int valinta = 0;
-	printf("Hemuli-hahmonluontityökalu!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
+
+	printf("Hemuli-hahmonluontity\x94kalu!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
 	scanf_s("%d", &valinta);
+	printf("\n");
+
 	return valinta;
 }
 
 int luonti()
 {
-	printf("Hahmonluonti\n\nM: Muokkaus");
+	printf("Hahmonluonti\n\nM: Muokkaus\n\n");
 
 	return esikatselu(0);
 }
 
 int esikatselu(int hahmoID)
 {
-	printf("Hahmon esikatselu.");
+	printf("Hahmon esikatselu.\n\n");
 
+	return 0;
 }
 
 int hahmonMuokkaus(int hahmoID)
 {
-	printf("Hahmonmuokkaus");
+	printf("Hahmonmuokkaus.\n\n");
 
 }
 
 int tiedonMuokkaus(int hahmoID)
 {
-	printf("Muuta hahmon tietoja.");
+	printf("Muuta hahmon tietoja.\n\n");
 }
 
 int selaus()
 {
-	printf("Selaa luotuja hahmoja.");
+	printf("Selaa luotuja hahmoja.\n\n");
+
+	return 0;
 }
 
 int lataus()
