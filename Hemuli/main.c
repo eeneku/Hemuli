@@ -2,12 +2,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-struct hero
+struct sankari
 {
-	char name[25];
-	int strength;
-	int dexterity;
-	int intelligence;
+	char nimi[25];
+	int rotu;
+	int luokka;
+	int taidot[5];
+	int edut[3];
+	int voima;
+	int taito;
+	int viisaus;
+	int onni;
 };
 
 void introkuva();
@@ -46,6 +51,7 @@ int main()
 		}
 		case 3: break;			// Lopetus
 		}
+		system("cls");
 	} while (valinta != 3);		// Ohjelman lopetus
 
 	return 0;
@@ -76,34 +82,93 @@ int paavalikko()
 
 int luonti()
 {
-	printf("Hahmonluonti\n\nM: Muokkaus\n\n");
+	struct sankari temp;
+
+	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi. >");
+	
+	printf("\n\nValitse rotu.\n\n1.Ihminen\n2.Haltia\n3.Peikko\n4.Joulupukki");
+	scanf_s("%d", &temp.rotu);
+
+	printf("\n\nValitse luokka.\n\n1.Soturi\n\n2.Velho\n\n3.Varas");
+	scanf_s("%d", &temp.luokka);
+
+	printf("\n\nValitse VOIMA.");
+	scanf_s("%d", &temp.voima);
+
+	printf("\n\nValitse TAITO.");
+	scanf_s("%d", &temp.taito);
+
+	printf("\n\nValitse VIISAUS.");
+	scanf_s("%d", &temp.viisaus);
+
+	printf("\n\nValitse ONNI.");
+	scanf_s("%d", &temp.onni);
+
+	for (int i = 0; i < 5; i++)
+	{
+		printf("\n\nValitse taidot.\n\n1.sdfsfsdf\n\n2.sdfsdfsdf\n\n3.sdfasfergds");
+		scanf_s("%d", &temp.taidot[i]);
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		printf("\n\nValitse etu.\n\n1.jooo\n\n2.jaaa\n\n3.jeee");
+		scanf_s("%d", &temp.edut[i]);
+	}
 
 	return esikatselu(0);
 }
 
 int esikatselu(int hahmoID)
 {
-	printf("Hahmon esikatselu.\n\n");
+	int valinta = 0;
+	do
+	{
+		printf("Esikatselu!\n\n1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
+		scanf_s("%d", &valinta);
+		printf("\n");
 
-	return 0;
+	} while (valinta < 0 || valinta > 2);
+	if (valinta == 1)
+	{
+		return hahmonMuokkaus(hahmoID);
+	}
+	else
+	{
+		return valinta;
+	}
 }
 
 int hahmonMuokkaus(int hahmoID)
 {
 	printf("Hahmonmuokkaus.\n\n");
-
+	return 0;
 }
 
 int tiedonMuokkaus(int hahmoID)
 {
 	printf("Muuta hahmon tietoja.\n\n");
+	return 0;
 }
 
 int selaus()
 {
-	printf("Selaa luotuja hahmoja.\n\n");
+	int valinta = 0;
+	do
+	{
+		printf("Hemuli-hahmonluontity\x94kalu!\n\n1.- 100. Valitse hahmo\n0. P\x84\x84valikko");
+		scanf_s("%d", &valinta);
+		printf("\n");
 
-	return 0;
+	} while (valinta < 0 || valinta > 100);
+	if (valinta == 0)
+	{
+		return valinta;
+	}
+	else
+	{
+		return esikatselu(valinta);
+	}
 }
 
 int lataus()
