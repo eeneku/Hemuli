@@ -2,17 +2,20 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define RODUT 5
+#define TAIDOT 5
+#define EDUT 3
+#define OMINAISUUDET 4
+#define MERKIT 25
+
 struct sankari
 {
-	char nimi[25];
+	char nimi[MERKIT];
 	int rotu;
 	int luokka;
-	int taidot[5];
-	int edut[3];
-	int voima;
-	int taito;
-	int viisaus;
-	int onni;
+	int taidot[TAIDOT];
+	int edut[EDUT];
+	int ominaisuudet[OMINAISUUDET];
 };
 
 void introkuva();
@@ -28,9 +31,12 @@ int poisto(hahmoID);
 
 const char * annaTaito(int taitoID);
 
-char rodut[5][25] = { "ihminen", "haltia", "kääpiö", "hobitti", "örkki" };
-char taidot[5][25] = { "vimmaisku", "tulipallo", "kadotus", "jääisku", "korpo" };
-char edut[5][25] = { "iso pää", "pienet lihakset", "ei jalkoja", "sormeton", "musta kieli" };
+char rodut[RODUT][25] = { "ihminen", "haltia", "k\x84\x84pi\x94", "hobitti", "\x94rkki" };
+char taidot[TAIDOT][25] = { "vimmaisku", "tulipallo", "kadotus", "j\x84\x84isku", "korpo" };
+char edut[5][25] = { "iso p\x84\x84", "pienet lihakset", "ei jalkoja", "sormeton", "musta kieli" };
+char ominaisuudet[OMINAISUUDET][25] = { "voima", "taito", "\x84lykkyys", "onni" };
+int rotuArvot[RODUT][4];
+
 
 int main()
 {
@@ -102,25 +108,20 @@ int luonti()
 	printf("\n\nValitse luokka.\n\n1.Soturi\n\n2.Velho\n\n3.Varas");
 	scanf_s("%d", &temp.luokka);
 
-	printf("\n\nValitse VOIMA.");
-	scanf_s("%d", &temp.voima);
+	for (int i = 0; i < OMINAISUUDET; i++)
+	{
+		printf("\n\nValitse %s.", ominaisuudet[i]);
+		scanf_s("%d", &temp.ominaisuudet[i]);
+	}
+	
 
-	printf("\n\nValitse TAITO.");
-	scanf_s("%d", &temp.taito);
-
-	printf("\n\nValitse VIISAUS.");
-	scanf_s("%d", &temp.viisaus);
-
-	printf("\n\nValitse ONNI.");
-	scanf_s("%d", &temp.onni);
-
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < TAIDOT; i++)
 	{
 		printf("\n\nValitse taidot.\n\n1.sdfsfsdf\n\n2.sdfsdfsdf\n\n3.sdfasfergds");
 		scanf_s("%d", &temp.taidot[i]);
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < EDUT; i++)
 	{
 		printf("\n\nValitse etu.\n\n1.jooo\n\n2.jaaa\n\n3.jeee");
 		scanf_s("%d", &temp.edut[i]);
