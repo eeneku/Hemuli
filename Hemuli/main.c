@@ -3,6 +3,7 @@
 #include <time.h>
 
 #define RODUT 5
+#define LUOKAT 5
 #define TAIDOT 5
 #define EDUT 3
 #define OMINAISUUDET 4
@@ -31,19 +32,25 @@ int poisto(hahmoID);
 
 const char * annaTaito(int taitoID);
 
-char rodut[RODUT][25] = { "ihminen", "haltia", "k\x84\x84pi\x94", "hobitti", "\x94rkki" };
-char taidot[TAIDOT][25] = { "vimmaisku", "tulipallo", "kadotus", "j\x84\x84isku", "korpo" };
-char edut[5][25] = { "iso p\x84\x84", "pienet lihakset", "ei jalkoja", "sormeton", "musta kieli" };
-char ominaisuudet[OMINAISUUDET][25] = { "voima", "taito", "\x84lykkyys", "onni" };
-int rotuArvot[RODUT][4];
-
+char rodut[RODUT][MERKIT] = { "ihminen", "haltia", "k\x84\x84pi\x94", "puoli\x94rkki", "hobitti" };
+char luokat[LUOKAT][MERKIT] = { "soturi", "mets\x84st\x84j\x84", "velho", "varas", "pappi" };
+char edut[5][MERKIT] = { "iso p\x84\x84", "pienet lihakset", "ei jalkoja", "sormeton", "musta kieli" };
+char ominaisuudet[OMINAISUUDET][MERKIT] = { "voima", "taito", "\x84lykkyys", "onni" };
+char taidot[LUOKAT][TAIDOT][MERKIT] = { 
+		{ "kilpi-isku", "sotahuuto", "rynnäkkö", "vimmalyönti", " " }, 
+		{ "ansa", "myrkkynuoli", "jäljitys", "väijytys", "nuolisade" }, 
+		{ "tulipallo", "muodonmuutos", "levitointi", "jääkilpi", "paineaalto" }, 
+		{ "heittotähdet", "pikajuoksu", "savupommi", "aseistariisunta", " "}, 
+		{ "parannus", "syntien poltto", "sauvaisku", "pyhä kilpi", "sokaisu" } };
+int rotuArvot[RODUT][OMINAISUUDET] = {
+		{ 5, 5, 5, 5 }, 
+		{ 4, 6, 7 ,3 }, 
+		{ 7, 4, 4, 5},
+		{ 8, 5, 3, 4 }, 
+		{ 3, 6, 5, 6 }};
 
 int main()
 {
-	printf("%s\n", rodut[3]);
-	printf("%s\n", taidot[4]);
-	printf("%s\n", edut[3]);
-
 	int valinta = 0;
 	introkuva();
 	do
@@ -102,23 +109,32 @@ int luonti()
 
 	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi. >");
 	
-	printf("\n\nValitse rotu.\n\n1.Ihminen\n2.Haltia\n3.Peikko\n4.Joulupukki");
+	printf("\n\nValitse rotu.\n\n");
+	for (int i = 0; i < RODUT; i++)
+	{
+		printf("%d. %s\n", i + 1, rodut[i]);
+	}
 	scanf_s("%d", &temp.rotu);
+	temp.rotu--;
 
-	printf("\n\nValitse luokka.\n\n1.Soturi\n\n2.Velho\n\n3.Varas");
+	printf("\n\nValitse luokka.\n\n");
+	for (int i = 0; i < LUOKAT; i++)
+	{
+		printf("%d. %s\n", i + 1, luokat[i]);
+	}
 	scanf_s("%d", &temp.luokka);
+	temp.luokka--;
 
 	for (int i = 0; i < OMINAISUUDET; i++)
 	{
-		printf("\n\nValitse %s.", ominaisuudet[i]);
-		scanf_s("%d", &temp.ominaisuudet[i]);
+		temp.ominaisuudet[i] = rotuArvot[temp.rotu][i];
+		printf("%s: %d\n", ominaisuudet[i], temp.ominaisuudet[i]);
 	}
 	
-
+	printf("ULIULI! Sait taidot: \n");
 	for (int i = 0; i < TAIDOT; i++)
 	{
-		printf("\n\nValitse taidot.\n\n1.sdfsfsdf\n\n2.sdfsdfsdf\n\n3.sdfasfergds");
-		scanf_s("%d", &temp.taidot[i]);
+		printf("%d. %s\n", i + 1, taidot[temp.luokka][i]);
 	}
 
 	for (int i = 0; i < EDUT; i++)
