@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 #define RODUT 5
 #define LUOKAT 5
@@ -149,21 +150,22 @@ int luonti()
 int esikatselu(int hahmoID)
 {
 	int valinta = 0;
-	do
-	{
-		printf("Esikatselu!\n\n1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
-		scanf_s("%d", &valinta);
-		printf("\n");
+		do
+		{
+			printf("Esikatselu!\n\n1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
+			scanf_s("%d", &valinta);
+			printf("\n");
 
-	} while (valinta < 0 || valinta > 2);
-	if (valinta == 1)
-	{
-		return hahmonMuokkaus(hahmoID);
-	}
-	else
-	{
-		return valinta;
-	}
+		} while (valinta < 0 || valinta > 2 || isalpha(valinta));
+		if (valinta == 1)
+		{
+			return hahmonMuokkaus(hahmoID);
+		}
+		else
+		{
+			return valinta;
+		}
+
 }
 
 int hahmonMuokkaus(int hahmoID)
