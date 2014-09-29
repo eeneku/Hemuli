@@ -94,8 +94,14 @@ int paavalikko()
 {
 	int valinta = 0;
 
-	printf("Hemuli-hahmonluontity\x94kalu!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
-	scanf_s("%d", &valinta);
+	printf("\nHemuli-hahmonluontity\x94kalu!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
+	
+	while (scanf_s("%d", &valinta) == 0)
+	{
+		printf("\nMerkit vittuun! Kokeile uusiks...\n");
+		fflush(stdin);
+	}
+
 	printf("\n");
 
 	system("cls");
