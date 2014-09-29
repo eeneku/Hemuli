@@ -26,8 +26,18 @@ int lataus();
 int tallennus();
 int poisto(hahmoID);
 
+const char * annaTaito(int taitoID);
+
+char rodut[5][25] = { "ihminen", "haltia", "kääpiö", "hobitti", "örkki" };
+char taidot[5][25] = { "vimmaisku", "tulipallo", "kadotus", "jääisku", "korpo" };
+char edut[5][25] = { "iso pää", "pienet lihakset", "ei jalkoja", "sormeton", "musta kieli" };
+
 int main()
 {
+	printf("%s\n", rodut[3]);
+	printf("%s\n", taidot[4]);
+	printf("%s\n", edut[3]);
+
 	int valinta = 0;
 	introkuva();
 	do
@@ -185,4 +195,11 @@ int poisto(int hahmoID)
 {
 	printf("Oletko varma etta haluat poistaa hahmon? Y/N >");
 	scanf_s("%d", &poisto);
+}
+
+const char * annaTaito(int taitoID)
+{
+	const char * taito = "Vimmajoo!";
+
+	return taito;
 }
