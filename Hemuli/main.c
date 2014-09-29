@@ -31,18 +31,16 @@ int lataus();
 int tallennus();
 int poisto(hahmoID);
 
-const char * annaTaito(int taitoID);
-
 char rodut[RODUT][MERKIT] = { "ihminen", "haltia", "k\x84\x84pi\x94", "puoli\x94rkki", "hobitti" };
 char luokat[LUOKAT][MERKIT] = { "soturi", "mets\x84st\x84j\x84", "velho", "varas", "pappi" };
 char edut[5][MERKIT] = { "iso p\x84\x84", "pienet lihakset", "ei jalkoja", "sormeton", "musta kieli" };
 char ominaisuudet[OMINAISUUDET][MERKIT] = { "voima", "taito", "\x84lykkyys", "onni" };
 char taidot[LUOKAT][TAIDOT][MERKIT] = { 
-		{ "kilpi-isku", "sotahuuto", "rynnäkkö", "vimmalyönti", " " }, 
-		{ "ansa", "myrkkynuoli", "jäljitys", "väijytys", "nuolisade" }, 
-		{ "tulipallo", "muodonmuutos", "levitointi", "jääkilpi", "paineaalto" }, 
-		{ "heittotähdet", "pikajuoksu", "savupommi", "aseistariisunta", " "}, 
-		{ "parannus", "syntien poltto", "sauvaisku", "pyhä kilpi", "sokaisu" } };
+		{ "kilpi-isku", "sotahuuto", "rynn\x84kk\x94", "vimmaly\x94nti", " " }, 
+		{ "ansa", "myrkkynuoli", "j\x84ljitys", "v\x84ijytys", "nuolisade" }, 
+		{ "tulipallo", "muodonmuutos", "levitointi", "j\x84\x84kilpi", "paineaalto" }, 
+		{ "heittot\x84hdet", "pikajuoksu", "savupommi", "aseistariisunta", " "}, 
+		{ "parannus", "syntien poltto", "sauvaisku", "pyh\x84 kilpi", "sokaisu" } };
 int rotuArvot[RODUT][OMINAISUUDET] = {
 		{ 5, 5, 5, 5 }, 
 		{ 4, 6, 7 ,3 }, 
@@ -75,7 +73,6 @@ int main()
 		}
 		case 3: break;			// Lopetus
 		}
-		system("cls");
 	} while (valinta != 3);		// Ohjelman lopetus
 
 	return 0;
@@ -101,6 +98,7 @@ int paavalikko()
 	scanf_s("%d", &valinta);
 	printf("\n");
 
+	system("cls");
 	return valinta;
 }
 
@@ -132,7 +130,7 @@ int luonti()
 		printf("%s: %d\n", ominaisuudet[i], temp.ominaisuudet[i]);
 	}
 	
-	printf("ULIULI! Sait taidot: \n");
+	printf("\n\nULIULI! Sait taidot: \n\n");
 	for (int i = 0; i < TAIDOT; i++)
 	{
 		printf("%d. %s\n", i + 1, taidot[temp.luokka][i]);
@@ -144,39 +142,46 @@ int luonti()
 		scanf_s("%d", &temp.edut[i]);
 	}
 
+	system("cls");
 	return esikatselu(0);
 }
 
 int esikatselu(int hahmoID)
 {
 	int valinta = 0;
-		do
-		{
-			printf("Esikatselu!\n\n1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
-			scanf_s("%d", &valinta);
-			printf("\n");
 
-		} while (valinta < 0 || valinta > 2 || isalpha(valinta));
-		if (valinta == 1)
-		{
-			return hahmonMuokkaus(hahmoID);
-		}
-		else
-		{
-			return valinta;
-		}
+	do
+	{
+		printf("Esikatselu!\n\n1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
+		printf("\n");
+
+	} while (scanf_s("%d", &valinta) == -1 || valinta < 0 || valinta > 2);
+	if (valinta == 1)
+	{
+		system("cls");
+		return hahmonMuokkaus(hahmoID);
+	}
+	else
+	{
+		system("cls");
+		return valinta;
+	}
 
 }
 
 int hahmonMuokkaus(int hahmoID)
 {
 	printf("Hahmonmuokkaus.\n\n");
+
+	system("cls");
 	return 0;
 }
 
 int tiedonMuokkaus(int hahmoID)
 {
 	printf("Muuta hahmon tietoja.\n\n");
+
+	system("cls");
 	return 0;
 }
 
@@ -192,33 +197,36 @@ int selaus()
 	} while (valinta < 0 || valinta > 100);
 	if (valinta == 0)
 	{
+		system("cls");
 		return valinta;
 	}
 	else
 	{
+		system("cls");
 		return esikatselu(valinta);
 	}
 }
 
 int lataus()
 {
+	printf("Lataaaaaaa... \n\n");
 
+	system("cls");
+	return 0;
 }
 
 int tallennus()
 {
+	printf("Tallentaaaaaaa... \n\n");
 
+	system("cls");
+	return 0;
 }
 
 int poisto(int hahmoID)
 {
 	printf("Oletko varma etta haluat poistaa hahmon? Y/N >");
-	scanf_s("%d", &poisto);
-}
 
-const char * annaTaito(int taitoID)
-{
-	const char * taito = "Vimmajoo!";
-
-	return taito;
+	system("cls");
+	return 0;
 }
