@@ -212,7 +212,7 @@ int pisteet(int hahmoID)
 	for (int i = 4; i > 0; i--)
 	{
 		printf("Hahmosi ominaisuudet ovat \nSinulla on %d pistettä käytettävissä vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.Älykkyys\n4.Onni", i);
-		scanf_s("%d", rotuArvot[]++);
+
 	}
 
 }
