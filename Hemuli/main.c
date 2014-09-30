@@ -130,7 +130,7 @@ int luonti()
 	free(sankarit);
 	sankarit = malloc(sizeof(struct sankari) * ++sankareita);
 
-	struct sankari * uusiHahmo = &sankarit[sankareita - 1];
+	int hahmoID = sankareita - 1;
 	
 	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi. >");
 	
@@ -139,47 +139,47 @@ int luonti()
 	{
 		printf("%d. %s\n", i + 1, rodut[i]);
 	}
-	while (scanf_s("%d", &uusiHahmo->rotu) == 0 || uusiHahmo->rotu < 1 || uusiHahmo->rotu > RODUT)
+	while (scanf_s("%d", &sankarit[hahmoID].rotu) == 0 || sankarit[hahmoID].rotu < 1 || sankarit[hahmoID].rotu > RODUT)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 		fflush(stdin);
 	}
-	uusiHahmo->rotu--;
+	sankarit[hahmoID].rotu--;
 
 	printf("\n\nValitse luokka.\n\n");
 	for (int i = 0; i < LUOKAT; i++)
 	{
 		printf("%d. %s\n", i + 1, luokat[i]);
 	}
-	while (scanf_s("%d", &uusiHahmo->luokka) == 0 || uusiHahmo->luokka < 1 || uusiHahmo->luokka > LUOKAT)
+	while (scanf_s("%d", &sankarit[hahmoID].luokka) == 0 || sankarit[hahmoID].luokka < 1 || sankarit[hahmoID].luokka > LUOKAT)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 		fflush(stdin);
 	}
-	uusiHahmo->luokka--;
+	sankarit[hahmoID].luokka--;
 
 	printf("\n\nOminaisuudet:\n\n");
 	for (int i = 0; i < OMINAISUUDET; i++)
 	{
-		uusiHahmo->ominaisuudet[i] = rotuArvot[uusiHahmo->rotu][i];
-		printf("%s: %d\n", ominaisuudet[i], uusiHahmo->ominaisuudet[i]);
+		sankarit[hahmoID].ominaisuudet[i] = rotuArvot[sankarit[hahmoID].rotu][i];
+		printf("%s: %d\n", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
 	}
 	
 	printf("\n\nULIULI! Sait taidot: \n\n");
 	for (int i = 0; i < TAIDOT; i++)
 	{
-		printf("%s\n", taidot[uusiHahmo->luokka][i]);
+		printf("%s\n", taidot[sankarit[hahmoID].luokka][i]);
 	}
 
 	// EDUT 
-	while (scanf_s("%d", &uusiHahmo->edut[0]) == 0)
+	while (scanf_s("%d", &sankarit[hahmoID].edut[0]) == 0)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 		fflush(stdin);
 	}
 
 	system("cls");
-	return esikatselu(0);
+	return esikatselu(hahmoID);
 }
 
 int esikatselu(int hahmoID)
