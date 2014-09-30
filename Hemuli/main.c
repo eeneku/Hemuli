@@ -138,7 +138,10 @@ int luonti()
 
 	int hahmoID = sankareita - 1;
 	
-	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi. >");
+	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi (max. %d merkki\x84. >", MERKIT-1);
+	fflush(stdin);
+	fgets(sankarit[hahmoID].nimi, MERKIT, stdin);
+	printf("%s", sankarit[hahmoID].nimi);
 	
 	printf("\n\nValitse rotu.\n\n");
 	for (int i = 0; i < RODUT; i++)
@@ -244,6 +247,7 @@ int pisteet(int hahmoID)
 		system("cls");
 	}
 
+	return 0;
 }
 
 int hahmonMuokkaus(int hahmoID)
