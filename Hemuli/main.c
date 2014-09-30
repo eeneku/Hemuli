@@ -99,7 +99,7 @@ int paavalikko()
 	
 	while (scanf_s("%d", &valinta) == 0)
 	{
-		printf("\nMerkit vittuun! Kokeile uusiks...\n");
+		printf("Virheellinen syöte! Yritä uudelleen: > ");
 		fflush(stdin);
 	}
 
@@ -120,7 +120,11 @@ int luonti()
 	{
 		printf("%d. %s\n", i + 1, rodut[i]);
 	}
-	scanf_s("%d", &temp.rotu);
+	while (scanf_s("%d", &temp.rotu) == 0 || temp.rotu < 1 || temp.rotu > RODUT)
+	{
+		printf("Virheellinen syöte! Yritä uudelleen: > ");
+		fflush(stdin);
+	}
 	temp.rotu--;
 
 	printf("\n\nValitse luokka.\n\n");
@@ -128,9 +132,14 @@ int luonti()
 	{
 		printf("%d. %s\n", i + 1, luokat[i]);
 	}
-	scanf_s("%d", &temp.luokka);
+	while (scanf_s("%d", &temp.luokka) == 0 || temp.luokka < 1 || temp.luokka > LUOKAT)
+	{
+		printf("Virheellinen syöte! Yritä uudelleen: > ");
+		fflush(stdin);
+	}
 	temp.luokka--;
 
+	printf("\n\nOminaisuude:\n\n");
 	for (int i = 0; i < OMINAISUUDET; i++)
 	{
 		temp.ominaisuudet[i] = rotuArvot[temp.rotu][i];
@@ -140,13 +149,14 @@ int luonti()
 	printf("\n\nULIULI! Sait taidot: \n\n");
 	for (int i = 0; i < TAIDOT; i++)
 	{
-		printf("%d. %s\n", i + 1, taidot[temp.luokka][i]);
+		printf("%s\n", taidot[temp.luokka][i]);
 	}
 
-	for (int i = 0; i < EDUT; i++)
+	// EDUT 
+	while (scanf_s("%d", &temp.edut[0]) == 0)
 	{
-		printf("\n\nValitse etu.\n\n1.jooo\n\n2.jaaa\n\n3.jeee");
-		scanf_s("%d", &temp.edut[i]);
+		printf("Virheellinen syöte! Yritä uudelleen: > ");
+		fflush(stdin);
 	}
 
 	system("cls");
@@ -157,12 +167,15 @@ int esikatselu(int hahmoID)
 {
 	int valinta = 0;
 
-	do
-	{
-		printf("Esikatselu!\n\n1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
-		printf("\n");
+	printf("Esikatselu!\n\n1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
+	printf("\n");
 
-	} while (scanf_s("%d", &valinta) == -1 || valinta < 0 || valinta > 2);
+	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 2)
+	{
+		printf("Virheellinen syöte! Yritä uudelleen: > ");
+		fflush(stdin);
+	}
+
 	if (valinta == 1)
 	{
 		system("cls");
