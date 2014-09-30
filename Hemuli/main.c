@@ -9,6 +9,7 @@
 #define EDUT 3
 #define OMINAISUUDET 4
 #define MERKIT 25
+#define EDUT_MAX 20
 
 struct sankari
 {
@@ -33,7 +34,7 @@ int poisto(hahmoID);
 
 char rodut[RODUT][MERKIT] = { "ihminen", "haltia", "k\x84\x84pi\x94", "puoli\x94rkki", "hobitti" };
 char luokat[LUOKAT][MERKIT] = { "soturi", "mets\x84st\x84j\x84", "velho", "varas", "pappi" };
-char edut[5][MERKIT] = { "iso p\x84\x84", "pienet lihakset", "ei jalkoja", "sormeton", "musta kieli" };
+char edut[EDUT_MAX][MERKIT] = { "iso p\x84\x84", "pienet lihakset", "ei jalkoja", "sormeton", "musta kieli" };
 char ominaisuudet[OMINAISUUDET][MERKIT] = { "voima", "taito", "\x84lykkyys", "onni" };
 char taidot[LUOKAT][TAIDOT][MERKIT] = { 
 		{ "kilpi-isku", "sotahuuto", "rynn\x84kk\x94", "vimmaly\x94nti", " " }, 
