@@ -32,8 +32,12 @@ int poisto(hahmoID);
 int pisteet(hahmoID);
 
 char rodut[RODUT][MERKIT] = { "Ihminen", "Haltia", "K\x84\x84pi\x94", "Puoli\x94rkki", "Hobitti" };
+
 char luokat[LUOKAT][MERKIT] = { "Soturi", "Mets\x84st\x84j\x84", "Velho", "Varas", "Pappi" };
-char edut[EDUT_MAX][MERKIT] = { "Haukankatse", "Nopea reaktiokyky", "Akrobatia", "Kaappi", "Lemmikki", "Veriuhraus", "Hannu Hanhi", "Manan lapsi", "Kitupiikki", "Iso P\x84\x84", "Lukutoukka", "N\x84pp\x84r\x84", "Johtaja", "Pyh\x84", "K\x84rsim\x84t\x94n", "Kirottu", "Kultakutri", "Mielenhallinta", "Karaistu", "Hipsteri" };
+
+char edut[EDUT_MAX][MERKIT] = { "Haukankatse", "Nopea reaktiokyky", "Akrobatia", "Kaappi", "Lemmikki", "Veriuhraus", "Hannu Hanhi", "Manan lapsi",
+"Kitupiikki", "Iso P\x84\x84", "Lukutoukka", "N\x84pp\x84r\x84", "Johtaja", "Pyh\x84", "K\x84rsim\x84t\x94n", "Kirottu", "Kultakutri", "Mielenhallinta", "Karaistu", "Hipsteri" };
+
 char edutSelitykset[EDUT_MAX][MERKIT * 4] = { "+10 % kriittisen osuman todenn\x84k\x94isyys.",
 "+15 % v\x84ist\x94mahdollisuus, nakkijonossa +100 %.", "50 % mahdollisuus vastaiskuun v\x84ist\x94n j\x84lkeen.",
 "Valtavat muskelit! Kaksinkertainen kriittisen osuman vahinko.", "Voi auttaa satunnaisesti taistelussa, muista siivota j\x84t\x94kset.",
@@ -43,13 +47,16 @@ char edutSelitykset[EDUT_MAX][MERKIT * 4] = { "+10 % kriittisen osuman todenn\x8
 "L\x84hell\x84 oleville liittolaisille +5 % kaikkiin ominaisuuksiin.", "Tuplavahinko ep\x84kuolleita vastaan.", "Iskee aina ensimm\x84isen\x84, -15 % kaikkiin ominaisuuksiin.",
 "Rumat kasvonpiirteet, 0,5 % mahdollisuus s\x84ik\x84ytt\x84\x84 vastustaja.", "Elovena-malli, 0,5 % mahdollisuus hurmata vihollinen.",
 "Voi ohjailla v\x84h\x84-\x84lyisi\x84 otuksia ja juoppoja.", "+10 % elinvoimaa, muista k\x84ytt\x84\x84 hilseshampoota.", "Ei t\x84st\x84 oikeasti mit\x84\x84n hy\x94ty\x84 ole." };
+
 char ominaisuudet[OMINAISUUDET][MERKIT] = { "Voima", "Taito", "\x8elykkyys", "Onni" };
+
 char taidot[LUOKAT][TAIDOT][MERKIT] = { 
 		{ "kilpi-isku", "sotahuuto", "rynn\x84kk\x94", "vimmaly\x94nti", " " }, 
 		{ "ansa", "myrkkynuoli", "j\x84ljitys", "v\x84ijytys", "nuolisade" }, 
 		{ "tulipallo", "muodonmuutos", "levitointi", "j\x84\x84kilpi", "paineaalto" }, 
 		{ "heittot\x84hdet", "pikajuoksu", "savupommi", "aseistariisunta", " "}, 
 		{ "parannus", "syntien poltto", "sauvaisku", "pyh\x84 kilpi", "sokaisu" } };
+
 int rotuArvot[RODUT][OMINAISUUDET] = {
 		{ 5, 5, 5, 5 }, 
 		{ 4, 6, 7 ,3 }, 
@@ -162,8 +169,23 @@ int luonti()
 	{
 		sankarit[hahmoID].ominaisuudet[i] = rotuArvot[sankarit[hahmoID].rotu][i];
 		printf("%s: %d\n", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
+
 	}
-	
+
+	for (int j = 4; j > 0; j--)
+	{
+		
+		int valinta = 0;
+		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x8e k\x8eytett\x8eviss\x8e vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.\x8elykkyys\n4.Onni\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
+		scanf_s("%d", &valinta);
+
+		valinta--;
+		sankarit[hahmoID].ominaisuudet[valinta]++;
+
+		system("cls");
+	}
+
+	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
 	printf("\n\nULIULI! Sait taidot: \n\n");
 	for (int i = 0; i < TAIDOT; i++)
 	{
@@ -209,10 +231,17 @@ int esikatselu(int hahmoID)
 
 int pisteet(int hahmoID)
 {
-	for (int i = 4; i > 0; i--)
+	for (int j = 4; j > 0; j--)
 	{
-		printf("Hahmosi ominaisuudet ovat \nSinulla on %d pistettä käytettävissä vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.Älykkyys\n4.Onni", i);
 
+		int valinta = 0;
+		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x8e k\x8eytett\x8eviss\x8e vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.\x8elykkyys\n4.Onni\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
+		scanf_s("%d", &valinta);
+
+		valinta--;
+		sankarit[hahmoID].ominaisuudet[valinta]++;
+
+		system("cls");
 	}
 
 }
