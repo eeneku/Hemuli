@@ -57,9 +57,14 @@ int rotuArvot[RODUT][OMINAISUUDET] = {
 		{ 8, 5, 3, 4 }, 
 		{ 3, 6, 5, 6 }};
 
+struct sankari * sankarit;
+int sankareita = 0;
+
 int main()
 {
+	lataus();
 	int valinta = 0;
+
 	introkuva();
 	do
 	{
@@ -84,6 +89,8 @@ int main()
 		}
 	} while (valinta != 3);		// Ohjelman lopetus
 
+	free(sankarit);
+
 	return 0;
 }
 
@@ -103,6 +110,7 @@ int paavalikko()
 {
 	int valinta = 0;
 
+	printf("Sankareita: %d\n", sankareita);
 	printf("\nHemuli-hahmonluontity\x94kalu!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
 	
 	while (scanf_s("%d", &valinta) == 0 || valinta < 1 || valinta > 3)
@@ -119,8 +127,11 @@ int paavalikko()
 
 int luonti()
 {
-	struct sankari temp;
+	free(sankarit);
+	sankarit = malloc(sizeof(struct sankari) * ++sankareita);
 
+	int hahmoID = sankareita - 1;
+	
 	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi. >");
 	
 	printf("\n\nValitse rotu.\n\n");
@@ -128,47 +139,47 @@ int luonti()
 	{
 		printf("%d. %s\n", i + 1, rodut[i]);
 	}
-	while (scanf_s("%d", &temp.rotu) == 0 || temp.rotu < 1 || temp.rotu > RODUT)
+	while (scanf_s("%d", &sankarit[hahmoID].rotu) == 0 || sankarit[hahmoID].rotu < 1 || sankarit[hahmoID].rotu > RODUT)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 		fflush(stdin);
 	}
-	temp.rotu--;
+	sankarit[hahmoID].rotu--;
 
 	printf("\n\nValitse luokka.\n\n");
 	for (int i = 0; i < LUOKAT; i++)
 	{
 		printf("%d. %s\n", i + 1, luokat[i]);
 	}
-	while (scanf_s("%d", &temp.luokka) == 0 || temp.luokka < 1 || temp.luokka > LUOKAT)
+	while (scanf_s("%d", &sankarit[hahmoID].luokka) == 0 || sankarit[hahmoID].luokka < 1 || sankarit[hahmoID].luokka > LUOKAT)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 		fflush(stdin);
 	}
-	temp.luokka--;
+	sankarit[hahmoID].luokka--;
 
 	printf("\n\nOminaisuudet:\n\n");
 	for (int i = 0; i < OMINAISUUDET; i++)
 	{
-		temp.ominaisuudet[i] = rotuArvot[temp.rotu][i];
-		printf("%s: %d\n", ominaisuudet[i], temp.ominaisuudet[i]);
+		sankarit[hahmoID].ominaisuudet[i] = rotuArvot[sankarit[hahmoID].rotu][i];
+		printf("%s: %d\n", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
 	}
 	
 	printf("\n\nULIULI! Sait taidot: \n\n");
 	for (int i = 0; i < TAIDOT; i++)
 	{
-		printf("%s\n", taidot[temp.luokka][i]);
+		printf("%s\n", taidot[sankarit[hahmoID].luokka][i]);
 	}
 
 	// EDUT 
-	while (scanf_s("%d", &temp.edut[0]) == 0)
+	while (scanf_s("%d", &sankarit[hahmoID].edut[0]) == 0)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 		fflush(stdin);
 	}
 
 	system("cls");
-	return esikatselu(0);
+	return esikatselu(hahmoID);
 }
 
 int esikatselu(int hahmoID)
@@ -247,8 +258,6 @@ int selaus()
 
 int lataus()
 {
-	printf("Lataaaaaaa... \n\n");
-
 	system("cls");
 	return 0;
 }
