@@ -127,8 +127,7 @@ int paavalikko()
 
 int luonti()
 {
-	free(sankarit);
-	sankarit = malloc(sizeof(struct sankari) * ++sankareita);
+	sankarit = realloc(sankarit, sizeof(struct sankari) * ++sankareita);
 
 	int hahmoID = sankareita - 1;
 	
