@@ -4,18 +4,18 @@ Laitetaan joku t‰hti (*) vaikka kun on saatu tehty‰ joku kohta.
 
 YLEISET
 
-Valikkorakenne toimimaan (niin ett‰ p‰‰st‰‰n eri valikosta toiseen) ihan kaikkien 
+*Valikkorakenne toimimaan (niin ett‰ p‰‰st‰‰n eri valikosta toiseen) ihan kaikkien 
 aliohjelmien kanssa.
 
 HAHMOT
 
-Hahmojen tiedot jne.
-	Ominaisuudet
-	Luokat
-	Attribuutit
-	Perkit
-Hahmon tietueen luonti joka sis‰lt‰‰ edell‰ mainitut ominaisuudet.
-Hahmon luonti ja lis‰ys taulukkoon.
+*Hahmojen tiedot jne.
+	*Ominaisuudet
+	*Luokat
+	*Attribuutit
+	*Perkit
+*Hahmon tietueen luonti joka sis‰lt‰‰ edell‰ mainitut ominaisuudet.
+*Hahmon luonti ja lis‰ys taulukkoon.
 Hahmon poisto taulukosta.
 Hahmojen selaus.
 Hahmon tietojen n‰ytt‰minen (esikatselu).
