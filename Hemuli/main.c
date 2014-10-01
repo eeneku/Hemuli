@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define RODUT 5
 #define LUOKAT 5
@@ -29,7 +30,7 @@ int selaus();
 int lataus();
 int tallennus();
 int poisto(hahmoID);
-int pisteet(hahmoID);
+void pisteet(hahmoID);
 
 char rodut[RODUT][MERKIT] = { "Ihminen", "Haltia", "K\x84\x84pi\x94", "Puoli\x94rkki", "Hobitti" };
 
@@ -51,10 +52,10 @@ char edutSelitykset[EDUT_MAX][MERKIT * 4] = { "+10 % kriittisen osuman todenn\x8
 char ominaisuudet[OMINAISUUDET][MERKIT] = { "Voima", "Taito", "\x8elykkyys", "Onni" };
 
 char taidot[LUOKAT][TAIDOT][MERKIT] = { 
-		{ "kilpi-isku", "sotahuuto", "rynn\x84kk\x94", "vimmaly\x94nti", " " }, 
+		{ "kilpi-isku", "sotahuuto", "rynn\x84kk\x94", "vimmaly\x94nti", "heitto" }, 
 		{ "ansa", "myrkkynuoli", "j\x84ljitys", "v\x84ijytys", "nuolisade" }, 
 		{ "tulipallo", "muodonmuutos", "levitointi", "j\x84\x84kilpi", "paineaalto" }, 
-		{ "heittot\x84hdet", "pikajuoksu", "savupommi", "aseistariisunta", " "}, 
+		{ "heittot\x84hdet", "pikajuoksu", "savupommi", "aseistariisunta", "tiirikointi"}, 
 		{ "parannus", "syntien poltto", "sauvaisku", "pyh\x84 kilpi", "sokaisu" } };
 
 int rotuArvot[RODUT][OMINAISUUDET] = {
@@ -175,18 +176,7 @@ int luonti()
 
 	}
 
-	for (int j = 4; j > 0; j--)
-	{
-		
-		int valinta = 0;
-		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x8e k\x8eytett\x8eviss\x8e vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.\x8elykkyys\n4.Onni\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
-		scanf_s("%d", &valinta);
-
-		valinta--;
-		sankarit[hahmoID].ominaisuudet[valinta]++;
-
-		system("cls");
-	}
+	pisteet(hahmoID);
 
 	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
 	printf("\n\nULIULI! Sait taidot: \n\n");
@@ -214,7 +204,7 @@ int esikatselu(int hahmoID)
 
 	printf("Sankari: %s", sankarit[hahmoID].nimi);
 	
-	printf("1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
+	printf("1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
 	printf("\n");
 
 	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 2)
@@ -228,6 +218,11 @@ int esikatselu(int hahmoID)
 		system("cls");
 		return hahmonMuokkaus(hahmoID);
 	}
+	else if (valinta == 3)
+	{
+		system("cls");
+		return poisto(hahmoID);
+	}
 	else
 	{
 		system("cls");
@@ -236,7 +231,7 @@ int esikatselu(int hahmoID)
 
 }
 
-int pisteet(int hahmoID)
+void pisteet(int hahmoID)
 {
 	for (int j = 4; j > 0; j--)
 	{
@@ -250,8 +245,6 @@ int pisteet(int hahmoID)
 
 		system("cls");
 	}
-
-	return 0;
 }
 
 int hahmonMuokkaus(int hahmoID)
@@ -275,7 +268,7 @@ int selaus()
 	int valinta = 0;
 	do
 	{
-		printf("Hemuli-hahmonluontity\x94kalu!\n\n1.- %d. Valitse hahmo\n", sankareita);
+		printf("Hemuli-hahmonluontity\x94kalu!\nValitse hahmo\n", sankareita);
 
 		for (int i = 0; i < sankareita; i++)
 		{
@@ -316,7 +309,21 @@ int tallennus()
 
 int poisto(int hahmoID)
 {
-	printf("Oletko varma etta haluat poistaa hahmon? Y/N >");
+	char valinta;
+	printf("Oletko varma etta haluat poistaa hahmon %s? Y/N > ", sankarit[hahmoID].nimi);
+	
+	while (scanf_s("%c", &valinta, 1) == 0 || strcmp(valinta, 'N') == 0 ||strcmp(valinta, 'Y') == 0)
+	{
+		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
+		fflush(stdin);
+	}
+
+	if (strcmp(valinta, 'Y', 1) == 0)
+	{
+		printf("BAM! Sitte poistetaan.");
+	}
+
+	scanf_s("%c", &valinta, 1);
 
 	system("cls");
 	return 0;
