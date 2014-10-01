@@ -209,7 +209,7 @@ int esikatselu(int hahmoID)
 		printf("%s: %d  ", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
 	}
 		
-	printf("\n1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
+	printf("\n\n1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
 	printf("\n");
 
 	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 3)
