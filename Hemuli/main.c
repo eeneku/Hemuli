@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define RODUT 5
 #define LUOKAT 5
@@ -141,7 +140,7 @@ int luonti()
 	
 	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi (max. %d merkki\x84. >", MERKIT-1);
 	fflush(stdin);
-	fgets(sankarit[hahmoID].nimi, MERKIT, stdin);
+	gets_s(sankarit[hahmoID].nimi, MERKIT);
 	printf("Sankari: %s", sankarit[hahmoID].nimi);
 	
 	printf("\n\nValitse rotu.\n\n");
@@ -213,7 +212,7 @@ int esikatselu(int hahmoID)
 	printf("\n1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
 	printf("\n");
 
-	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 2)
+	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 3)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 		fflush(stdin);
@@ -316,18 +315,9 @@ int tallennus()
 int poisto(int hahmoID)
 {
 	char valinta;
-	printf("Oletko varma etta haluat poistaa hahmon %s? Y/N > ", sankarit[hahmoID].nimi);
+	printf("Hahmo %s poistetaan (ei tässä mitään varmistuksia tarvita!)", sankarit[hahmoID].nimi);
 	
-	while (scanf_s("%c", &valinta, 1) == 0 || strcmp(valinta, 'N') == 0 ||strcmp(valinta, 'Y') == 0)
-	{
-		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
-		fflush(stdin);
-	}
-
-	if (strcmp(valinta, 'Y', 1) == 0)
-	{
-		printf("BAM! Sitte poistetaan.");
-	}
+	fflush(stdin);
 
 	scanf_s("%c", &valinta, 1);
 
