@@ -141,7 +141,7 @@ int luonti()
 	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi (max. %d merkki\x84. >", MERKIT-1);
 	fflush(stdin);
 	fgets(sankarit[hahmoID].nimi, MERKIT, stdin);
-	printf("%s", sankarit[hahmoID].nimi);
+	printf("Sankari: %s", sankarit[hahmoID].nimi);
 	
 	printf("\n\nValitse rotu.\n\n");
 	for (int i = 0; i < RODUT; i++)
@@ -210,7 +210,11 @@ int esikatselu(int hahmoID)
 {
 	int valinta = 0;
 
-	printf("Esikatselu!\n\n1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
+	printf("Esikatselu!\n\n");
+
+	printf("Sankari: %s", sankarit[hahmoID].nimi);
+	
+	printf("1. Muokkaa\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
 	printf("\n");
 
 	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 2)
@@ -271,11 +275,19 @@ int selaus()
 	int valinta = 0;
 	do
 	{
-		printf("Hemuli-hahmonluontity\x94kalu!\n\n1.- 100. Valitse hahmo\n0. P\x84\x84valikko");
+		printf("Hemuli-hahmonluontity\x94kalu!\n\n1.- %d. Valitse hahmo\n", sankareita);
+
+		for (int i = 0; i < sankareita; i++)
+		{
+			printf("%d: %s", i + 1, sankarit[i].nimi);
+		}
+
+		printf("0. P\x84\x84valikko");
+
 		scanf_s("%d", &valinta);
 		printf("\n");
 
-	} while (valinta < 0 || valinta > 100);
+	} while (valinta < 0 || valinta > sankareita);
 	if (valinta == 0)
 	{
 		system("cls");
@@ -284,7 +296,7 @@ int selaus()
 	else
 	{
 		system("cls");
-		return esikatselu(valinta);
+		return esikatselu(--valinta);
 	}
 }
 
