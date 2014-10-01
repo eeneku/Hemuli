@@ -202,9 +202,15 @@ int esikatselu(int hahmoID)
 
 	printf("Esikatselu!\n\n");
 
-	printf("Sankari: %s", sankarit[hahmoID].nimi);
-	
-	printf("1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
+	printf("Sankari: %s\n", sankarit[hahmoID].nimi);
+	printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
+	printf("Luokka: %s\n", luokat[sankarit[hahmoID].luokka]);
+	for( int i = 0; i < OMINAISUUDET; i++)
+	{
+		printf("%s: %d  ", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
+	}
+		
+	printf("\n1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
 	printf("\n");
 
 	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 2)
