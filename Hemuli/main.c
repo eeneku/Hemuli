@@ -27,7 +27,7 @@ int hahmonMuokkaus(hahmoID);
 int tiedonMuokkaus(hahmoID);
 int selaus();
 int lataus();
-int tallennus();
+void tallennus();
 int poisto(hahmoID);
 void pisteet(hahmoID);
 
@@ -191,6 +191,8 @@ int luonti()
 		fflush(stdin);
 	}
 
+	tallennus();
+
 	system("cls");
 	return esikatselu(hahmoID);
 }
@@ -238,18 +240,18 @@ int esikatselu(int hahmoID)
 
 void pisteet(int hahmoID)
 {
-	for (int j = 4; j > 0; j--)
+	for (int j = OMINAISUUDET; j > 0; j--)
 	{
-
+		system("cls");
 		int valinta = 0;
 		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x8e k\x8eytett\x8eviss\x8e vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.\x8elykkyys\n4.Onni\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
 		scanf_s("%d", &valinta);
 
 		valinta--;
 		sankarit[hahmoID].ominaisuudet[valinta]++;
-
-		system("cls");
 	}
+
+	system("cls");
 }
 
 int hahmonMuokkaus(int hahmoID)
@@ -277,7 +279,7 @@ int selaus()
 
 		for (int i = 0; i < sankareita; i++)
 		{
-			printf("%d: %s", i + 1, sankarit[i].nimi);
+			printf("%d: %s\n", i + 1, sankarit[i].nimi);
 		}
 
 		printf("0. P\x84\x84valikko");
@@ -304,12 +306,31 @@ int lataus()
 	return 0;
 }
 
-int tallennus()
+void tallennus()
 {
-	printf("Tallentaaaaaaa... \n\n");
+	FILE *Hahmot;
+	fopen_s(&Hahmot, "hahmot.txt", "w");
 
-	system("cls");
-	return 0;
+	if (Hahmot != 0)
+	{
+		for (int i = 0; i < sankareita; i++)
+		{
+			fputs(sankarit[i].nimi, Hahmot);
+			fputs("\n", Hahmot);
+			fprintf(Hahmot, "%d", sankarit[i].rotu);
+			fputs("\n", Hahmot);
+			fprintf(Hahmot, "%d", sankarit[i].luokka);
+			fputs("\n", Hahmot);
+			fprintf(Hahmot, "%d", sankarit[i].taidot[TAIDOT]);
+			fputs("\n", Hahmot);
+			fprintf(Hahmot, "%d", sankarit[i].edut[EDUT]);
+			fputs("\n", Hahmot);
+			fprintf(Hahmot, "%d", sankarit[i].ominaisuudet[OMINAISUUDET]);
+			fputs("\n", Hahmot);
+		}
+		fclose(Hahmot);
+	}
+
 }
 
 int poisto(int hahmoID)
