@@ -14,7 +14,6 @@ struct sankari
 	char nimi[MERKIT];
 	int rotu;
 	int luokka;
-	int taidot[TAIDOT];
 	int edut[EDUT];
 	int ominaisuudet[OMINAISUUDET];
 };
@@ -185,6 +184,10 @@ int luonti()
 	}
 
 	// EDUT 
+	for (int i = 0; i < EDUT; i++)
+	{
+		sankarit[hahmoID].edut[i] = 0;
+	}
 	while (scanf_s("%d", &sankarit[hahmoID].edut[0]) == 0)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
@@ -317,16 +320,16 @@ void tallennus()
 		{
 			fputs(sankarit[i].nimi, Hahmot);
 			fputs("\n", Hahmot);
-			fprintf(Hahmot, "%d", sankarit[i].rotu);
-			fputs("\n", Hahmot);
-			fprintf(Hahmot, "%d", sankarit[i].luokka);
-			fputs("\n", Hahmot);
-			fprintf(Hahmot, "%d", sankarit[i].taidot[TAIDOT]);
-			fputs("\n", Hahmot);
-			fprintf(Hahmot, "%d", sankarit[i].edut[EDUT]);
-			fputs("\n", Hahmot);
-			fprintf(Hahmot, "%d", sankarit[i].ominaisuudet[OMINAISUUDET]);
-			fputs("\n", Hahmot);
+			fprintf(Hahmot, "%d\n", sankarit[i].rotu);
+			fprintf(Hahmot, "%d\n", sankarit[i].luokka);
+			for (int j = 0; j < EDUT; j++)
+			{
+				fprintf(Hahmot, "%d\n", sankarit[i].edut[j]);
+			}
+			for (int j = 0; j < OMINAISUUDET; j++)
+			{
+				fprintf(Hahmot, "%d\n", sankarit[i].ominaisuudet[j]);
+			}
 		}
 		fclose(Hahmot);
 	}
