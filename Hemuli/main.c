@@ -339,11 +339,37 @@ void tallennus()
 int poisto(int hahmoID)
 {
 	char valinta;
-	printf("Hahmo %s poistetaan (ei tässä mitään varmistuksia tarvita!)", sankarit[hahmoID].nimi);
+	printf("Hahmo %s poistetaan. Eikö? (Y/N) > ", sankarit[hahmoID].nimi);
 	
 	fflush(stdin);
 
 	scanf_s("%c", &valinta, 1);
+
+	switch (valinta)
+	{
+	case 'y':
+	case 'Y': {
+		struct sankari *taulukko;
+		taulukko = malloc(sizeof(struct sankari)*sankareita - 1);
+
+		for (int i = 0, j = 0; i < sankareita; i++)
+		{
+			if (i != hahmoID)
+			{
+				taulukko[j] = sankarit[i];
+				j++;
+			}
+		}
+
+		free(sankarit);
+		sankarit = taulukko;
+		sankareita -= 1;
+
+		tallennus();
+
+		break;
+	}
+	};
 
 	system("cls");
 	return 0;
