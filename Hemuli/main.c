@@ -214,13 +214,22 @@ int esikatselu(int hahmoID)
 		printf("%s: %d  ", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
 	}
 	
+	printf("\nTaidot: ");
 	for (int i = 0; i < TAIDOT; i++)
 	{
+		printf("%s", taidot[sankarit[hahmoID].luokka][i]);
+		if (i != TAIDOT - 1) printf(", ");
+	}
 
+	printf("\nEdut: ");
+	for (int i = 0; i < EDUT; i++)
+	{
+		printf("%s", edut[sankarit[hahmoID].edut[i]]);
+
+		if (i != EDUT-1) printf(", ");
 	}
 		
 	printf("\n\n1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
-	printf("\n");
 
 	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 3)
 	{
