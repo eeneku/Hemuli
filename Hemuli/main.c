@@ -9,14 +9,14 @@
 #define MERKIT 25
 #define EDUT_MAX 20
 
-struct sankari
+typedef struct sankari
 {
 	char nimi[MERKIT];
 	int rotu;
 	int luokka;
 	int edut[EDUT];
 	int ominaisuudet[OMINAISUUDET];
-};
+} sankari;
 
 void introkuva();
 int paavalikko();
@@ -63,7 +63,7 @@ int rotuArvot[RODUT][OMINAISUUDET] = {
 		{ 8, 5, 3, 4 }, 
 		{ 3, 6, 5, 6 }};
 
-struct sankari * sankarit;
+sankari * sankarit;
 int sankareita = 0;
 
 int main()
@@ -133,7 +133,7 @@ int paavalikko()
 
 int luonti()
 {
-	sankarit = realloc(sankarit, sizeof(struct sankari) * ++sankareita);
+	sankarit = realloc(sankarit, sizeof(sankari) * ++sankareita);
 
 	int hahmoID = sankareita - 1;
 	
@@ -367,8 +367,8 @@ int poisto(int hahmoID)
 	{
 	case 'y':
 	case 'Y': {
-		struct sankari *taulukko;
-		taulukko = malloc(sizeof(struct sankari)*sankareita - 1);
+		sankari *taulukko;
+		taulukko = malloc(sizeof(sankari)*sankareita - 1);
 
 		for (int i = 0, j = 0; i < sankareita; i++)
 		{
