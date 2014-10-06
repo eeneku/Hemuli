@@ -9,6 +9,19 @@
 #define MERKIT 25
 #define EDUT_MAX 20
 
+#define jos if
+#define kokonaisluku int
+#define kun while
+#define tee do
+#define liukuluku float
+#define merkki char
+#define tapahtuma case
+#define poikki break
+#define kytkin switch
+#define palauta return
+#define vapauta free
+#define p‰‰funktio main
+
 struct sankari
 {
 	char nimi[MERKIT];
@@ -66,38 +79,38 @@ int rotuArvot[RODUT][OMINAISUUDET] = {
 struct sankari * sankarit;
 int sankareita = 0;
 
-int main()
+kokonaisluku p‰‰funktio()
 {
 	lataus();
-	int valinta = 0;
+	kokonaisluku valinta = 0;
 
 	introkuva();
-	do
+	tee
 	{
-		switch (valinta)
+		kytkin (valinta)
 		{
-		case 0:
+		tapahtuma 0:
 		{
 			valinta = paavalikko();
-			break;
+			poikki;
 		}
-		case 1:					//Luonti
+		tapahtuma 1 :					//Luonti
 		{
 			valinta = luonti();
-			break;
+			poikki;
 		}
-		case 2:					//Selaus
+		tapahtuma 2 :					//Selaus
 		{
 			valinta = selaus();
-			break;
+			poikki;
 		}
-		case 3: break;			// Lopetus
+		tapahtuma 3 : poikki;			// Lopetus
 		}
-	} while (valinta != 3);		// Ohjelman lopetus
+	} kun (valinta != 3);		// Ohjelman lopetus
 
-	free(sankarit);
+	vapauta(sankarit);
 
-	return 0;
+	palauta 0;
 }
 
 void introkuva()
