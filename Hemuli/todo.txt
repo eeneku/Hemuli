@@ -16,18 +16,19 @@ HAHMOT
 	*Perkit
 *Hahmon tietueen luonti joka sis‰lt‰‰ edell‰ mainitut ominaisuudet.
 *Hahmon luonti ja lis‰ys taulukkoon.
-Hahmon poisto taulukosta.
-Hahmojen selaus.
+*Hahmon poisto taulukosta.
+*Hahmojen selaus.
 Hahmon tietojen n‰ytt‰minen (esikatselu).
 Hahmon tietojen muuttaminen.
 
 TALLENNUS JA LATAUS
 
-Hahmojen tallennus tiedostoon.
+*Hahmojen tallennus tiedostoon.
 Hahmojen luku tiedostosta.
 
 VIIMEISTELY
 
 Kirjoitusvirheet.
 Esimerkkihahmot.
-Jne.
+Kommentointi.
+Se raportti...

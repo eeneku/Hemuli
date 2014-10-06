@@ -213,6 +213,11 @@ int esikatselu(int hahmoID)
 	{
 		printf("%s: %d  ", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
 	}
+	
+	for (int i = 0; i < TAIDOT; i++)
+	{
+
+	}
 		
 	printf("\n\n1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
 	printf("\n");
@@ -316,6 +321,8 @@ void tallennus()
 
 	if (Hahmot != 0)
 	{
+		fprintf(Hahmot, "%d\n", sankareita);
+
 		for (int i = 0; i < sankareita; i++)
 		{
 			fputs(sankarit[i].nimi, Hahmot);
@@ -339,11 +346,13 @@ void tallennus()
 int poisto(int hahmoID)
 {
 	char valinta;
-	printf("Hahmo %s poistetaan. Eikö? (Y/N) > ", sankarit[hahmoID].nimi);
-	
-	fflush(stdin);
+	printf("Hahmo %s poistetaan.\n", sankarit[hahmoID].nimi);
 
-	scanf_s("%c", &valinta, 1);
+	do {
+		printf("(Y/N) > ");
+		fflush(stdin);
+		scanf_s("%c", &valinta, 1);
+	} while (valinta != 'Y' && valinta != 'y' && valinta != 'N' && valinta != 'n');
 
 	switch (valinta)
 	{
