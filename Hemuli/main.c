@@ -25,7 +25,7 @@ int esikatselu(hahmoID);
 int hahmonMuokkaus(hahmoID);
 int tiedonMuokkaus(hahmoID);
 int selaus();
-int lataus();
+void lataus();
 void tallennus();
 int poisto(hahmoID);
 void pisteet(hahmoID);
@@ -292,11 +292,11 @@ int selaus()
 	int valinta = 0;
 	do
 	{
-		printf("Hemuli-hahmonluontity\x94kalu!\nValitse hahmo\n", sankareita);
+		printf("Hemuli-hahmonluontity\x94kalu!\nValitse hahmo\n\n", sankareita);
 
 		for (int i = 0; i < sankareita; i++)
 		{
-			printf("%d: %s\n", i + 1, sankarit[i].nimi);
+			printf("%d: %s", i + 1, sankarit[i].nimi);
 		}
 
 		printf("0. P\x84\x84valikko");
@@ -317,10 +317,33 @@ int selaus()
 	}
 }
 
-int lataus()
+void lataus()
 {
-	system("cls");
-	return 0;
+	FILE *Hahmot;
+	fopen_s(&Hahmot, "hahmot.txt", "r");
+
+	if (Hahmot != 0)
+	{
+		fscanf_s(Hahmot, "%d\n", &sankareita);
+
+		sankarit = malloc(sizeof(sankari) * sankareita);
+
+		for (int i = 0; i < sankareita; i++)
+		{
+			fgets(sankarit[i].nimi, MERKIT, Hahmot);
+			fscanf_s(Hahmot, "%d\n", &sankarit[i].rotu);
+			fscanf_s(Hahmot, "%d\n", &sankarit[i].luokka);
+			for (int j = 0; j < EDUT; j++)
+			{
+				fscanf_s(Hahmot, "%d\n", &sankarit[i].edut[j]);
+			}
+			for (int j = 0; j < OMINAISUUDET; j++)
+			{
+				fscanf_s(Hahmot, "%d\n", &sankarit[i].ominaisuudet[j]);
+			}
+		}
+		fclose(Hahmot);
+	}
 }
 
 void tallennus()
