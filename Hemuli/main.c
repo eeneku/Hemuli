@@ -329,7 +329,6 @@ void lataus()
 		}
 		fclose(Hahmot);
 	}
-	system("cls");
 
 	lataaTiedot("data\\rodut.txt", &rodut, RODUT);
 	lataaTiedot("data\\luokat.txt", &luokat, LUOKAT);
@@ -343,6 +342,8 @@ void lataus()
 	lataaTiedot("data\\taidot_varas.txt", &taidot[3], TAIDOT);
 	lataaTiedot("data\\taidot_pappi.txt", &taidot[4], TAIDOT);
 	
+	system("cls");
+
 	return 0;
 }
 
