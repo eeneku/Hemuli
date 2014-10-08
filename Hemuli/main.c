@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define RODUT 5
 #define LUOKAT 5
 #define TAIDOT 5
 #define EDUT 3
 #define OMINAISUUDET 4
-#define MERKIT 25
+#define MERKIT 100
 #define EDUT_MAX 20
 
 typedef struct sankari
@@ -30,31 +31,15 @@ void tallennus();
 int poisto(hahmoID);
 void pisteet(hahmoID);
 
-char rodut[RODUT][MERKIT] = { "Ihminen", "Haltia", "K\x84\x84pi\x94", "Puoli\x94rkki", "Hobitti" };
+void lataaEtujenSelitykset();
+void lataaTiedot(char * polku, char * taulukko[], int koko);
 
-char luokat[LUOKAT][MERKIT] = { "Soturi", "Mets\x84st\x84j\x84", "Velho", "Varas", "Pappi" };
-
-char edut[EDUT_MAX][MERKIT] = { "Haukankatse", "Nopea reaktiokyky", "Akrobatia", "Kaappi", "Lemmikki", "Veriuhraus", "Hannu Hanhi", "Manan lapsi",
-"Kitupiikki", "Iso P\x84\x84", "Lukutoukka", "N\x84pp\x84r\x84", "Johtaja", "Pyh\x84", "K\x84rsim\x84t\x94n", "Kirottu", "Kultakutri", "Mielenhallinta", "Karaistu", "Hipsteri" };
-
-char edutSelitykset[EDUT_MAX][MERKIT * 4] = { "+10 % kriittisen osuman todenn\x84k\x94isyys.",
-"+15 % v\x84ist\x94mahdollisuus, nakkijonossa +100 %.", "50 % mahdollisuus vastaiskuun v\x84ist\x94n j\x84lkeen.",
-"Valtavat muskelit! Kaksinkertainen kriittisen osuman vahinko.", "Voi auttaa satunnaisesti taistelussa, muista siivota j\x84t\x94kset.",
-"Voi vaihtaa elinvoimaansa v\x84liaikaiseen voimanlis\x84ykseen.", "Onnen vaikutus tehostuu, ei voi k\x84ytt\x84\x84 housuja.",
-"Taikojen heitto 20 % helpomaa.", "Varusteet ja esineet 10 % halvemmalla.", "+10 % taikuuden teho, -10 % elinvoimaa.",
-"Oppii uusia taitoja nopeammin, -5 onnea tavernoissa.", "Osaa korjata ja parannella omia varusteitaan.",
-"L\x84hell\x84 oleville liittolaisille +5 % kaikkiin ominaisuuksiin.", "Tuplavahinko ep\x84kuolleita vastaan.", "Iskee aina ensimm\x84isen\x84, -15 % kaikkiin ominaisuuksiin.",
-"Rumat kasvonpiirteet, 0,5 % mahdollisuus s\x84ik\x84ytt\x84\x84 vastustaja.", "Elovena-malli, 0,5 % mahdollisuus hurmata vihollinen.",
-"Voi ohjailla v\x84h\x84-\x84lyisi\x84 otuksia ja juoppoja.", "+10 % elinvoimaa, muista k\x84ytt\x84\x84 hilseshampoota.", "Ei t\x84st\x84 oikeasti mit\x84\x84n hy\x94ty\x84 ole." };
-
-char ominaisuudet[OMINAISUUDET][MERKIT] = { "Voima", "Taito", "\x8elykkyys", "Onni" };
-
-char taidot[LUOKAT][TAIDOT][MERKIT] = { 
-		{ "kilpi-isku", "sotahuuto", "rynn\x84kk\x94", "vimmaly\x94nti", "heitto" }, 
-		{ "ansa", "myrkkynuoli", "j\x84ljitys", "v\x84ijytys", "nuolisade" }, 
-		{ "tulipallo", "muodonmuutos", "levitointi", "j\x84\x84kilpi", "paineaalto" }, 
-		{ "heittot\x84hdet", "pikajuoksu", "savupommi", "aseistariisunta", "tiirikointi"}, 
-		{ "parannus", "syntien poltto", "sauvaisku", "pyh\x84 kilpi", "sokaisu" } };
+char *rodut[RODUT];
+char *luokat[LUOKAT];
+char *edut[EDUT_MAX];
+char *edutSelitykset[EDUT_MAX];
+char *ominaisuudet[OMINAISUUDET];
+char *taidot[LUOKAT][TAIDOT];
 
 int rotuArvot[RODUT][OMINAISUUDET] = {
 		{ 5, 5, 5, 5 }, 
@@ -344,6 +329,21 @@ void lataus()
 		}
 		fclose(Hahmot);
 	}
+	system("cls");
+
+	lataaTiedot("data\\rodut.txt", &rodut, RODUT);
+	lataaTiedot("data\\luokat.txt", &luokat, LUOKAT);
+	lataaTiedot("data\\edut.txt", &edut, EDUT_MAX);
+	lataaTiedot("data\\edut_selitykset.txt", &edutSelitykset, EDUT_MAX);
+	lataaTiedot("data\\ominaisuudet.txt", &ominaisuudet, OMINAISUUDET);
+
+	lataaTiedot("data\\taidot_soturi.txt", &taidot[0], TAIDOT);
+	lataaTiedot("data\\taidot_mestastaja.txt", &taidot[1], TAIDOT);
+	lataaTiedot("data\\taidot_velho.txt", &taidot[2], TAIDOT);
+	lataaTiedot("data\\taidot_varas.txt", &taidot[3], TAIDOT);
+	lataaTiedot("data\\taidot_pappi.txt", &taidot[4], TAIDOT);
+	
+	return 0;
 }
 
 void tallennus()
@@ -414,4 +414,33 @@ int poisto(int hahmoID)
 
 	system("cls");
 	return 0;
+}
+
+void lataaTiedot(char * polku, char * taulukko[], int koko)
+{
+	FILE *tiedosto;
+	fopen_s(&tiedosto, polku, "r");
+
+	if (tiedosto != 0)
+	{
+		for (int i = 0; i < koko; i++)
+		{
+			char temp[MERKIT];
+			fgets(temp, MERKIT, tiedosto);
+
+			for (int i = 0; i < strlen(temp); i++)
+			{
+				if (temp[i] == -28) temp[i] = '\x84';
+				else if (temp[i] == -10) temp[i] = '\x94';
+				else if (temp[i] == -60) temp[i] = '\x8e';
+				else if (temp[i] == -42) temp[i] = '\x99';
+			}
+
+			taulukko[i] = malloc(sizeof(char)*strlen(temp));
+
+			strncpy_s(taulukko[i], strlen(temp), temp, strlen(temp) - 1);
+		}
+
+		fclose(tiedosto);
+	}
 }
