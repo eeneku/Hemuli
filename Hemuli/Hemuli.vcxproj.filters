@@ -21,5 +21,15 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt" />
+    <Text Include="data\edut.txt" />
+    <Text Include="data\edut_selitykset.txt" />
+    <Text Include="data\luokat.txt" />
+    <Text Include="data\ominaisuudet.txt" />
+    <Text Include="data\rodut.txt" />
+    <Text Include="data\taidot_metsastaja.txt" />
+    <Text Include="data\taidot_pappi.txt" />
+    <Text Include="data\taidot_soturi.txt" />
+    <Text Include="data\taidot_varas.txt" />
+    <Text Include="data\taidot_velho.txt" />
   </ItemGroup>
 </Project>
