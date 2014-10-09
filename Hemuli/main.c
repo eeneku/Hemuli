@@ -31,8 +31,8 @@ void tallennus();
 int poisto(hahmoID);
 void pisteet(hahmoID);
 
-void lataaEtujenSelitykset();
 void lataaTiedot(char * polku, char * taulukko[], int koko);
+void poistaTiedot();
 
 char *rodut[RODUT];
 char *luokat[LUOKAT];
@@ -61,26 +61,26 @@ int main()
 	{
 		switch (valinta)
 		{
-		case 0:
-		{
-			valinta = paavalikko();
-			break;
-		}
-		case 1:					//Luonti
-		{
-			valinta = luonti();
-			break;
-		}
-		case 2:					//Selaus
-		{
-			valinta = selaus();
-			break;
-		}
-		case 3: break;			// Lopetus
+			case 0:
+			{
+				valinta = paavalikko();
+				break;
+			}
+			case 1:					//Luonti
+			{
+				valinta = luonti();
+				break;
+			}
+			case 2:					//Selaus
+			{
+				valinta = selaus();
+				break;
+			}
+			case 3: break;			// Lopetus
 		}
 	} while (valinta != 3);		// Ohjelman lopetus
 
-	free(sankarit);
+	poistaTiedot();
 
 	return 0;
 }
@@ -281,7 +281,7 @@ int selaus()
 
 		for (int i = 0; i < sankareita; i++)
 		{
-			printf("%d: %s", i + 1, sankarit[i].nimi);
+			printf("%d: %s\n", i + 1, sankarit[i].nimi);
 		}
 
 		printf("0. P\x84\x84valikko");
@@ -315,7 +315,9 @@ void lataus()
 
 		for (int i = 0; i < sankareita; i++)
 		{
-			fgets(sankarit[i].nimi, MERKIT, Hahmot);
+			char temp[MERKIT];
+			fgets(temp, MERKIT, Hahmot);
+			strncpy_s(sankarit[i].nimi, strlen(temp), temp, strlen(temp) - 1);
 			fscanf_s(Hahmot, "%d\n", &sankarit[i].rotu);
 			fscanf_s(Hahmot, "%d\n", &sankarit[i].luokka);
 			for (int j = 0; j < EDUT; j++)
@@ -330,21 +332,19 @@ void lataus()
 		fclose(Hahmot);
 	}
 
-	lataaTiedot("data\\rodut.txt", &rodut, RODUT);
-	lataaTiedot("data\\luokat.txt", &luokat, LUOKAT);
-	lataaTiedot("data\\edut.txt", &edut, EDUT_MAX);
-	lataaTiedot("data\\edut_selitykset.txt", &edutSelitykset, EDUT_MAX);
-	lataaTiedot("data\\ominaisuudet.txt", &ominaisuudet, OMINAISUUDET);
+	lataaTiedot("data\\rodut.txt", rodut, RODUT);
+	lataaTiedot("data\\luokat.txt", luokat, LUOKAT);
+	lataaTiedot("data\\edut.txt", edut, EDUT_MAX);
+	lataaTiedot("data\\edut_selitykset.txt", edutSelitykset, EDUT_MAX);
+	lataaTiedot("data\\ominaisuudet.txt", ominaisuudet, OMINAISUUDET);
 
-	lataaTiedot("data\\taidot_soturi.txt", &taidot[0], TAIDOT);
-	lataaTiedot("data\\taidot_mestastaja.txt", &taidot[1], TAIDOT);
-	lataaTiedot("data\\taidot_velho.txt", &taidot[2], TAIDOT);
-	lataaTiedot("data\\taidot_varas.txt", &taidot[3], TAIDOT);
-	lataaTiedot("data\\taidot_pappi.txt", &taidot[4], TAIDOT);
-	
+	lataaTiedot("data\\taidot_soturi.txt", taidot[0], TAIDOT);
+	lataaTiedot("data\\taidot_metsastaja.txt", taidot[1], TAIDOT);
+	lataaTiedot("data\\taidot_velho.txt", taidot[2], TAIDOT);
+	lataaTiedot("data\\taidot_varas.txt", taidot[3], TAIDOT);
+	lataaTiedot("data\\taidot_pappi.txt", taidot[4], TAIDOT);
+
 	system("cls");
-
-	return 0;
 }
 
 void tallennus()
@@ -381,7 +381,8 @@ int poisto(int hahmoID)
 	char valinta;
 	printf("Hahmo %s poistetaan.\n", sankarit[hahmoID].nimi);
 
-	do {
+	do 
+	{
 		printf("(Y/N) > ");
 		fflush(stdin);
 		scanf_s("%c", &valinta, 1);
@@ -389,29 +390,30 @@ int poisto(int hahmoID)
 
 	switch (valinta)
 	{
-	case 'y':
-	case 'Y': {
-		sankari *taulukko;
-		taulukko = malloc(sizeof(sankari)*sankareita - 1);
-
-		for (int i = 0, j = 0; i < sankareita; i++)
+		case 'y':
+		case 'Y': 
 		{
-			if (i != hahmoID)
+			sankari *taulukko;
+			taulukko = malloc(sizeof(sankari)*sankareita - 1);
+
+			for (int i = 0, j = 0; i < sankareita; i++)
 			{
-				taulukko[j] = sankarit[i];
-				j++;
+				if (i != hahmoID)
+				{
+					taulukko[j] = sankarit[i];
+					j++;
+				}
 			}
+
+			free(sankarit);
+			sankarit = taulukko;
+			sankareita -= 1;
+
+			tallennus();
+
+			break;
 		}
-
-		free(sankarit);
-		sankarit = taulukko;
-		sankareita -= 1;
-
-		tallennus();
-
-		break;
 	}
-	};
 
 	system("cls");
 	return 0;
@@ -429,7 +431,7 @@ void lataaTiedot(char * polku, char * taulukko[], int koko)
 			char temp[MERKIT];
 			fgets(temp, MERKIT, tiedosto);
 
-			for (int i = 0; i < strlen(temp); i++)
+			for (unsigned int i = 0; i < strlen(temp); i++)
 			{
 				if (temp[i] == -28) temp[i] = '\x84';
 				else if (temp[i] == -10) temp[i] = '\x94';
@@ -443,5 +445,39 @@ void lataaTiedot(char * polku, char * taulukko[], int koko)
 		}
 
 		fclose(tiedosto);
+	}
+}
+
+void poistaTiedot()
+{
+	// Tämä funktio vapauttaa kaiken dynaamisesti varatun tilan.
+	free(sankarit);
+
+	for (int i = 0; i < RODUT; i++)
+	{
+		free(rodut[i]);
+	}
+
+	for (int i = 0; i < LUOKAT; i++)
+	{
+		free(luokat[i]);
+	}
+
+	for (int i = 0; i < EDUT_MAX; i++)
+	{
+		free(edut[i]);
+	}
+
+	for (int i = 0; i < EDUT_MAX; i++)
+	{
+		free(edutSelitykset[i]);
+	}
+
+	for (int i = 0; i < LUOKAT; i++)
+	{
+		for (int j = 0; j < TAIDOT; j++)
+		{
+			free(taidot[i][j]);
+		}
 	}
 }

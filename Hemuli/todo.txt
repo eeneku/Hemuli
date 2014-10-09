@@ -18,13 +18,13 @@ HAHMOT
 *Hahmon luonti ja lisäys taulukkoon.
 *Hahmon poisto taulukosta.
 *Hahmojen selaus.
-Hahmon tietojen näyttäminen (esikatselu).
+*Hahmon tietojen näyttäminen (esikatselu).
 Hahmon tietojen muuttaminen.
 
 TALLENNUS JA LATAUS
 
 *Hahmojen tallennus tiedostoon.
-Hahmojen luku tiedostosta.
+*Hahmojen luku tiedostosta.
 
 VIIMEISTELY
 
