@@ -156,7 +156,6 @@ int luonti()
 	{
 		sankarit[hahmoID].ominaisuudet[i] = rotuArvot[sankarit[hahmoID].rotu][i];
 		printf("%s: %d\n", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
-
 	}
 
 	pisteet(hahmoID);
@@ -246,14 +245,19 @@ void pisteet(int hahmoID)
 	{
 		system("cls");
 		int valinta = 0;
-		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x8e k\x8eytett\x8eviss\x8e vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.\x8elykkyys\n4.Onni\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
-		scanf_s("%d", &valinta);
+		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x84 k\x84ytett\x84viss\x84 vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.\x8elykkyys\n4.Onni\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
+
+		while (scanf_s("%d", &valinta) == 0 || valinta < 1 || valinta > 4)
+		{
+			printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
+			fflush(stdin);
+		}
 
 		valinta--;
-		sankarit[hahmoID].ominaisuudet[valinta]++;
-	}
 
-	system("cls");
+		sankarit[hahmoID].ominaisuudet[valinta]++;
+
+	}
 }
 
 int hahmonMuokkaus(int hahmoID)
