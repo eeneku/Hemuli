@@ -22,14 +22,13 @@ typedef struct sankari
 void introkuva();
 int paavalikko();
 int luonti();
-int esikatselu(hahmoID);
-int hahmonMuokkaus(hahmoID);
-int tiedonMuokkaus(hahmoID);
+int esikatselu(int hahmoID);
 int selaus();
 void lataus();
 void tallennus();
-int poisto(hahmoID);
-void pisteet(hahmoID);
+int poisto(int hahmoID);
+void pisteet(int hahmoID);
+void edunValinta(int hahmoID);
 
 void lataaTiedot(char * polku, char * taulukko[], int koko);
 void poistaTiedot();
@@ -102,7 +101,7 @@ int paavalikko()
 	int valinta = 0;
 
 	printf("Sankareita: %d\n", sankareita);
-	printf("\nHemuli-hahmonluontity\x94kalu!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
+	printf("\nHahmoakatemia Hemuli!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
 	
 	while (scanf_s("%d", &valinta) == 0 || valinta < 1 || valinta > 3)
 	{
@@ -161,27 +160,42 @@ int luonti()
 	pisteet(hahmoID);
 
 	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
-	printf("\n\nULIULI! Sait taidot: \n\n");
-	for (int i = 0; i < TAIDOT; i++)
-	{
-		printf("%s\n", taidot[sankarit[hahmoID].luokka][i]);
-	}
 
-	// EDUT 
-	for (int i = 0; i < EDUT; i++)
-	{
-		sankarit[hahmoID].edut[i] = 0;
-	}
-	while (scanf_s("%d", &sankarit[hahmoID].edut[0]) == 0)
-	{
-		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
-		fflush(stdin);
-	}
+	edunValinta(hahmoID);
 
 	tallennus();
 
 	system("cls");
 	return esikatselu(hahmoID);
+}
+
+void edunValinta(int hahmoID)
+{
+	int valitut[3] = { -1, -1, -1 };
+
+	for (int i = 0; i < EDUT; i++)
+	{
+		printf("Valitse %d. etu: \n", i + 1);
+
+		for (int j = 0; j < EDUT_MAX; j++)
+		{
+			int onJo = 0;
+			for (int k = 0; k < 3; k++)
+			{
+				if (valitut[k] == j) onJo = 1;
+			}
+			
+			if(!onJo) printf("%d. %s:   %s\n", j + 1, edut[j], edutSelitykset[j]);
+		}
+
+		while (scanf_s("%d", &valitut[i]) == 0)
+		{
+			printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
+			fflush(stdin);
+		}
+
+		sankarit[hahmoID].edut[i] = --valitut[i];
+	}
 }
 
 int esikatselu(int hahmoID)
@@ -213,7 +227,7 @@ int esikatselu(int hahmoID)
 		if (i != EDUT-1) printf(", ");
 	}
 		
-	printf("\n\n1. Muokkaa\n2. Takaisin selaukseen\n3. Poista\n0. P\x84\x84valikko");
+	printf("\n\n1. Poista\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
 
 	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 3)
 	{
@@ -222,11 +236,6 @@ int esikatselu(int hahmoID)
 	}
 
 	if (valinta == 1)
-	{
-		system("cls");
-		return hahmonMuokkaus(hahmoID);
-	}
-	else if (valinta == 3)
 	{
 		system("cls");
 		return poisto(hahmoID);
@@ -258,22 +267,6 @@ void pisteet(int hahmoID)
 		sankarit[hahmoID].ominaisuudet[valinta]++;
 
 	}
-}
-
-int hahmonMuokkaus(int hahmoID)
-{
-	printf("Hahmonmuokkaus.\n\n");
-
-	system("cls");
-	return 0;
-}
-
-int tiedonMuokkaus(int hahmoID)
-{
-	printf("Muuta hahmon tietoja.\n\n");
-
-	system("cls");
-	return 0;
 }
 
 int selaus()
@@ -377,7 +370,6 @@ void tallennus()
 		}
 		fclose(Hahmot);
 	}
-
 }
 
 int poisto(int hahmoID)

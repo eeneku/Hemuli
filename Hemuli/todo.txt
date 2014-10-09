@@ -19,7 +19,7 @@ HAHMOT
 *Hahmon poisto taulukosta.
 *Hahmojen selaus.
 *Hahmon tietojen näyttäminen (esikatselu).
-Hahmon tietojen muuttaminen.
+Etujen valinta loppuun
 
 TALLENNUS JA LATAUS
 
@@ -31,4 +31,4 @@ VIIMEISTELY
 Kirjoitusvirheet.
 Esimerkkihahmot.
 Kommentointi.
-Se raportti...
+Se raportti......
