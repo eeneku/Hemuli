@@ -28,6 +28,8 @@ void lataus();
 void tallennus();
 int poisto(int hahmoID);
 void pisteet(int hahmoID);
+void rodunValinta(int hahmoID);
+void luokanValinta(int hahmoID);
 void edunValinta(int hahmoID);
 
 void lataaTiedot(char * polku, char * taulukko[], int koko);
@@ -124,31 +126,14 @@ int luonti()
 	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi (max. %d merkki\x84. >", MERKIT-1);
 	fflush(stdin);
 	gets_s(sankarit[hahmoID].nimi, MERKIT);
-	printf("Sankari: %s", sankarit[hahmoID].nimi);
-	
-	printf("\n\nValitse rotu.\n\n");
-	for (int i = 0; i < RODUT; i++)
-	{
-		printf("%d. %s\n", i + 1, rodut[i]);
-	}
-	while (scanf_s("%d", &sankarit[hahmoID].rotu) == 0 || sankarit[hahmoID].rotu < 1 || sankarit[hahmoID].rotu > RODUT)
-	{
-		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
-		fflush(stdin);
-	}
-	sankarit[hahmoID].rotu--;
 
-	printf("\n\nValitse luokka.\n\n");
-	for (int i = 0; i < LUOKAT; i++)
-	{
-		printf("%d. %s\n", i + 1, luokat[i]);
-	}
-	while (scanf_s("%d", &sankarit[hahmoID].luokka) == 0 || sankarit[hahmoID].luokka < 1 || sankarit[hahmoID].luokka > LUOKAT)
-	{
-		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
-		fflush(stdin);
-	}
-	sankarit[hahmoID].luokka--;
+	system("cls");
+	
+	rodunValinta(hahmoID);
+	
+	system("cls");
+
+	luokanValinta(hahmoID);
 
 	printf("\n\nOminaisuudet:\n\n");
 	for (int i = 0; i < OMINAISUUDET; i++)
@@ -159,7 +144,9 @@ int luonti()
 
 	pisteet(hahmoID);
 
-	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
+	system("cls");
+	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\n\nSeuraavaksi p\x84\x84set edunvalintaan.\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
+	system("pause");
 
 	edunValinta(hahmoID);
 
@@ -175,6 +162,7 @@ void edunValinta(int hahmoID)
 
 	for (int i = 0; i < EDUT; i++)
 	{
+		system("cls");
 		printf("Valitse %d. etu: \n", i + 1);
 
 		for (int j = 0; j < EDUT_MAX; j++)
@@ -188,7 +176,7 @@ void edunValinta(int hahmoID)
 			if(!onJo) printf("%d. %s:   %s\n", j + 1, edut[j], edutSelitykset[j]);
 		}
 
-		while (scanf_s("%d", &valitut[i]) == 0)
+		while (scanf_s("%d", &valitut[i]) == 0 || valitut[i] > 20)
 		{
 			printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 			fflush(stdin);
@@ -248,13 +236,53 @@ int esikatselu(int hahmoID)
 
 }
 
+void rodunValinta(int hahmoID)
+{
+	printf("Sankari: %s", sankarit[hahmoID].nimi);
+
+	printf("\n\nValitse rotu.\n\n");
+	for (int i = 0; i < RODUT; i++)
+	{
+		printf("%d. %s\n", i + 1, rodut[i]);
+	}
+	while (scanf_s("%d", &sankarit[hahmoID].rotu) == 0 || sankarit[hahmoID].rotu < 1 || sankarit[hahmoID].rotu > RODUT)
+	{
+		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
+		fflush(stdin);
+	}
+	sankarit[hahmoID].rotu--;
+
+}
+
+void luokanValinta(int hahmoID)
+{
+	printf("Sankari: %s\n", sankarit[hahmoID].nimi);
+	printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
+
+	printf("\nValitse luokka.\n\n");
+	for (int i = 0; i < LUOKAT; i++)
+	{
+		printf("%d. %s\n", i + 1, luokat[i]);
+	}
+	while (scanf_s("%d", &sankarit[hahmoID].luokka) == 0 || sankarit[hahmoID].luokka < 1 || sankarit[hahmoID].luokka > LUOKAT)
+	{
+		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
+		fflush(stdin);
+	}
+	sankarit[hahmoID].luokka--;
+}
+
 void pisteet(int hahmoID)
 {
 	for (int j = OMINAISUUDET; j > 0; j--)
 	{
 		system("cls");
 		int valinta = 0;
-		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x84 k\x84ytett\x84viss\x84 vapaasti valitsemiisi ominaisuuksiin.\n\n1.Voima\n2.Taito\n3.\x8elykkyys\n4.Onni\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
+		printf("Sankari: %s\n", sankarit[hahmoID].nimi);
+		printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
+		printf("Luokka: %s\n\n", luokat[sankarit[hahmoID].luokka]);
+
+		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x84 k\x84ytett\x84viss\x84 vapaasti valitsemiisi ominaisuuksiin.\nPisteet asetetaan yksi kerrallaan.\n\n1.Voimaa\n2.Taitoa\n3.\x8elykkyytt\x84\n4.Onnea\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
 
 		while (scanf_s("%d", &valinta) == 0 || valinta < 1 || valinta > 4)
 		{
