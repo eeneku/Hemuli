@@ -31,7 +31,6 @@ void pisteet(int hahmoID);
 void rodunValinta(int hahmoID);
 void luokanValinta(int hahmoID);
 void edunValinta(int hahmoID);
-
 void lataaTiedot(char * polku, char * taulukko[], int koko);
 void poistaTiedot();
 
@@ -156,86 +155,6 @@ int luonti()
 	return esikatselu(hahmoID);
 }
 
-void edunValinta(int hahmoID)
-{
-	int valitut[3] = { -1, -1, -1 };
-
-	for (int i = 0; i < EDUT; i++)
-	{
-		system("cls");
-		printf("Valitse %d. etu: \n", i + 1);
-
-		for (int j = 0; j < EDUT_MAX; j++)
-		{
-			int onJo = 0;
-			for (int k = 0; k < 3; k++)
-			{
-				if (valitut[k] == j) onJo = 1;
-			}
-			
-			if(!onJo) printf("%d. %s:   %s\n", j + 1, edut[j], edutSelitykset[j]);
-		}
-
-		while (scanf_s("%d", &valitut[i]) == 0 || valitut[i] > 20)
-		{
-			printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
-			fflush(stdin);
-		}
-
-		sankarit[hahmoID].edut[i] = --valitut[i];
-	}
-}
-
-int esikatselu(int hahmoID)
-{
-	int valinta = 0;
-
-	printf("Esikatselu!\n\n");
-
-	printf("Sankari: %s\n", sankarit[hahmoID].nimi);
-	printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
-	printf("Luokka: %s\n", luokat[sankarit[hahmoID].luokka]);
-	for( int i = 0; i < OMINAISUUDET; i++)
-	{
-		printf("%s: %d  ", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
-	}
-	
-	printf("\nTaidot: ");
-	for (int i = 0; i < TAIDOT; i++)
-	{
-		printf("%s", taidot[sankarit[hahmoID].luokka][i]);
-		if (i != TAIDOT - 1) printf(", ");
-	}
-
-	printf("\nEdut: ");
-	for (int i = 0; i < EDUT; i++)
-	{
-		printf("%s", edut[sankarit[hahmoID].edut[i]]);
-
-		if (i != EDUT-1) printf(", ");
-	}
-		
-	printf("\n\n1. Poista\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
-
-	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 3)
-	{
-		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
-		fflush(stdin);
-	}
-
-	if (valinta == 1)
-	{
-		system("cls");
-		return poisto(hahmoID);
-	}
-	else
-	{
-		system("cls");
-		return valinta;
-	}
-
-}
-
 void rodunValinta(int hahmoID)
 {
 	printf("Sankari: %s", sankarit[hahmoID].nimi);
@@ -297,6 +216,36 @@ void pisteet(int hahmoID)
 	}
 }
 
+void edunValinta(int hahmoID)
+{
+	int valitut[3] = { -1, -1, -1 };
+
+	for (int i = 0; i < EDUT; i++)
+	{
+		system("cls");
+		printf("Valitse %d. etu: \n", i + 1);
+
+		for (int j = 0; j < EDUT_MAX; j++)
+		{
+			int onJo = 0;
+			for (int k = 0; k < 3; k++)
+			{
+				if (valitut[k] == j) onJo = 1;
+			}
+
+			if (!onJo) printf("%d. %s:   %s\n", j + 1, edut[j], edutSelitykset[j]);
+		}
+
+		while (scanf_s("%d", &valitut[i]) == 0 || valitut[i] > 20)
+		{
+			printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
+			fflush(stdin);
+		}
+
+		sankarit[hahmoID].edut[i] = --valitut[i];
+	}
+}
+
 int selaus()
 {
 	int valinta = 0;
@@ -325,6 +274,56 @@ int selaus()
 		system("cls");
 		return esikatselu(--valinta);
 	}
+}
+
+int esikatselu(int hahmoID)
+{
+	int valinta = 0;
+
+	printf("Esikatselu!\n\n");
+
+	printf("Sankari: %s\n", sankarit[hahmoID].nimi);
+	printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
+	printf("Luokka: %s\n", luokat[sankarit[hahmoID].luokka]);
+	for (int i = 0; i < OMINAISUUDET; i++)
+	{
+		printf("%s: %d  ", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
+	}
+
+	printf("\nTaidot: ");
+	for (int i = 0; i < TAIDOT; i++)
+	{
+		printf("%s", taidot[sankarit[hahmoID].luokka][i]);
+		if (i != TAIDOT - 1) printf(", ");
+	}
+
+	printf("\nEdut: ");
+	for (int i = 0; i < EDUT; i++)
+	{
+		printf("%s", edut[sankarit[hahmoID].edut[i]]);
+
+		if (i != EDUT - 1) printf(", ");
+	}
+
+	printf("\n\n1. Poista\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
+
+	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 3)
+	{
+		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
+		fflush(stdin);
+	}
+
+	if (valinta == 1)
+	{
+		system("cls");
+		return poisto(hahmoID);
+	}
+	else
+	{
+		system("cls");
+		return valinta;
+	}
+
 }
 
 void lataus()
@@ -370,6 +369,35 @@ void lataus()
 	lataaTiedot("data\\taidot_pappi.txt", taidot[4], TAIDOT);
 
 	system("cls");
+}
+
+void lataaTiedot(char * polku, char * taulukko[], int koko)
+{
+	FILE *tiedosto;
+	fopen_s(&tiedosto, polku, "r");
+
+	if (tiedosto != 0)
+	{
+		for (int i = 0; i < koko; i++)
+		{
+			char temp[MERKIT];
+			fgets(temp, MERKIT, tiedosto);
+
+			for (unsigned int i = 0; i < strlen(temp); i++)
+			{
+				if (temp[i] == -28) temp[i] = '\x84';
+				else if (temp[i] == -10) temp[i] = '\x94';
+				else if (temp[i] == -60) temp[i] = '\x8e';
+				else if (temp[i] == -42) temp[i] = '\x99';
+			}
+
+			taulukko[i] = malloc(sizeof(char)*strlen(temp));
+
+			strncpy_s(taulukko[i], strlen(temp), temp, strlen(temp) - 1);
+		}
+
+		fclose(tiedosto);
+	}
 }
 
 void tallennus()
@@ -441,35 +469,6 @@ int poisto(int hahmoID)
 
 	system("cls");
 	return 0;
-}
-
-void lataaTiedot(char * polku, char * taulukko[], int koko)
-{
-	FILE *tiedosto;
-	fopen_s(&tiedosto, polku, "r");
-
-	if (tiedosto != 0)
-	{
-		for (int i = 0; i < koko; i++)
-		{
-			char temp[MERKIT];
-			fgets(temp, MERKIT, tiedosto);
-
-			for (unsigned int i = 0; i < strlen(temp); i++)
-			{
-				if (temp[i] == -28) temp[i] = '\x84';
-				else if (temp[i] == -10) temp[i] = '\x94';
-				else if (temp[i] == -60) temp[i] = '\x8e';
-				else if (temp[i] == -42) temp[i] = '\x99';
-			}
-
-			taulukko[i] = malloc(sizeof(char)*strlen(temp));
-
-			strncpy_s(taulukko[i], strlen(temp), temp, strlen(temp) - 1);
-		}
-
-		fclose(tiedosto);
-	}
 }
 
 void poistaTiedot()
