@@ -210,10 +210,7 @@ void pisteet(int hahmoID)
 			fflush(stdin);
 		}
 
-		valinta--;
-
-		sankarit[hahmoID].ominaisuudet[valinta]++;
-
+		sankarit[hahmoID].ominaisuudet[--valinta]++;
 	}
 }
 
