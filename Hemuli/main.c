@@ -111,8 +111,6 @@ int paavalikko()
 		fflush(stdin);
 	}
 
-	printf("\n");
-
 	system("cls");
 	return valinta;
 }
