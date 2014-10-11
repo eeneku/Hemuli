@@ -31,6 +31,7 @@ void pisteet(int hahmoID);
 void rodunValinta(int hahmoID);
 void luokanValinta(int hahmoID);
 void edunValinta(int hahmoID);
+int etuValittu(int hahmoID, int etu);
 void lataaTiedot(char * polku, char * taulukko[], int koko);
 void poistaTiedot();
 
@@ -218,32 +219,44 @@ void pisteet(int hahmoID)
 
 void edunValinta(int hahmoID)
 {
-	int valitut[3] = { -1, -1, -1 };
+	for (int i = 0; i < EDUT; i++)
+	{
+		sankarit[hahmoID].edut[i] = -1;
+	}
 
 	for (int i = 0; i < EDUT; i++)
 	{
+		int syote = 0;
+
 		system("cls");
 		printf("Valitse %d. etu: \n", i + 1);
 
 		for (int j = 0; j < EDUT_MAX; j++)
 		{
-			int onJo = 0;
-			for (int k = 0; k < 3; k++)
-			{
-				if (valitut[k] == j) onJo = 1;
-			}
-
-			if (!onJo) printf("%d. %s:   %s\n", j + 1, edut[j], edutSelitykset[j]);
+			if (!etuValittu(hahmoID, j)) printf("%d. %s:   %s\n", j + 1, edut[j], edutSelitykset[j]);
 		}
 
-		while (scanf_s("%d", &valitut[i]) == 0 || valitut[i] > 20)
+		while (scanf_s("%d", &syote) == 0 || syote < 1 || syote > 20 || etuValittu(hahmoID, --syote))
 		{
 			printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 			fflush(stdin);
 		}
 
-		sankarit[hahmoID].edut[i] = --valitut[i];
+		sankarit[hahmoID].edut[i] = syote;
 	}
+}
+
+int etuValittu(int hahmoID, int etu)
+{
+	// Tarkistaa löytyykö hahmolta "hahmoID" etua "etu". Palauttaa 1 jos löytyy ja 0 jos ei löydy.
+	int loytyy = 0;
+
+	for (int i = 0; i < EDUT; i++)
+	{
+		if (sankarit[hahmoID].edut[i] == etu) loytyy = 1;
+	}
+
+	return loytyy;
 }
 
 int selaus()
@@ -264,6 +277,7 @@ int selaus()
 		printf("\n");
 
 	} while (valinta < 0 || valinta > sankareita);
+
 	if (valinta == 0)
 	{
 		system("cls");
