@@ -31,8 +31,8 @@ void pisteet(int hahmoID);
 void rodunValinta(int hahmoID);
 void luokanValinta(int hahmoID);
 void edunValinta(int hahmoID);
-int etuValittu(int hahmoID, int etu);
-void lataaTiedot(char * polku, char * taulukko[], int koko);
+int etuValittu(int hahmfgoID, int etu);
+void lataaTiedot(char *polku, char *taulukko[], int koko);
 void poistaTiedot();
 
 char *rodut[RODUT];
@@ -49,7 +49,7 @@ int rotuArvot[RODUT][OMINAISUUDET] = {
 		{ 8, 5, 3, 4 }, 
 		{ 3, 6, 5, 6 }};
 
-sankari * sankarit;
+sankari *sankarit;
 int sankareita = 0;
 
 int main()
@@ -380,7 +380,7 @@ void lataus()
 	system("cls");
 }
 
-void lataaTiedot(char * polku, char * taulukko[], int koko)
+void lataaTiedot(char *polku, char *taulukko[], int koko)
 {
 	FILE *tiedosto;
 	fopen_s(&tiedosto, polku, "r");
@@ -455,7 +455,7 @@ int poisto(int hahmoID)
 		case 'Y': 
 		{
 			sankari *taulukko;
-			taulukko = malloc(sizeof(sankari)*sankareita - 1);
+			taulukko = malloc(sizeof(sankari) * sankareita - 1);
 
 			for (int i = 0, j = 0; i < sankareita; i++)
 			{
