@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// K‰‰nt‰j‰n vakiot.
 #define RODUT 5
 #define LUOKAT 5
 #define TAIDOT 5
@@ -10,6 +11,7 @@
 #define MERKIT 100
 #define EDUT_MAX 20
 
+// sankari-tietue.
 typedef struct sankari
 {
 	char nimi[MERKIT];
@@ -19,6 +21,7 @@ typedef struct sankari
 	int ominaisuudet[OMINAISUUDET];
 } sankari;
 
+// Aliohjelmien esittelyt.
 void introkuva();
 int paavalikko();
 int luonti();
@@ -27,7 +30,7 @@ int selaus();
 void lataus();
 void tallennus();
 int poisto(int hahmoID);
-void pisteet(int hahmoID);
+void ominaisuuksienValinta(int hahmoID);
 void rodunValinta(int hahmoID);
 void luokanValinta(int hahmoID);
 void edunValinta(int hahmoID);
@@ -35,13 +38,13 @@ int etuValittu(int hahmfgoID, int etu);
 void lataaTiedot(char *polku, char *taulukko[], int koko);
 void poistaTiedot();
 
+// Globaalit muuttujat.
 char *rodut[RODUT];
 char *luokat[LUOKAT];
 char *edut[EDUT_MAX];
 char *edutSelitykset[EDUT_MAX];
 char *ominaisuudet[OMINAISUUDET];
 char *taidot[LUOKAT][TAIDOT];
-
 int rotuArvot[RODUT][OMINAISUUDET] = {
 		{ 5, 5, 5, 5 }, 
 		{ 4, 6, 7 ,3 }, 
@@ -52,42 +55,47 @@ int rotuArvot[RODUT][OMINAISUUDET] = {
 sankari *sankarit;
 int sankareita = 0;
 
+// P‰‰funktio.
 int main()
 {
+	// Ladataan tiedot.
 	lataus();
 	int valinta = 0;
 
-	introkuva();
 	do
 	{
 		switch (valinta)
 		{
-			case 0:
+			case 0:					// P‰‰valikko.
 			{
 				valinta = paavalikko();
 				break;
 			}
-			case 1:					//Luonti
+			case 1:					// Hahmonluonti.
 			{
 				valinta = luonti();
 				break;
 			}
-			case 2:					//Selaus
+			case 2:					// Hahmojen selaus.
 			{
 				valinta = selaus();
 				break;
 			}
-			case 3: break;			// Lopetus
+			case 3: break;			// Lopetus.
 		}
-	} while (valinta != 3);		// Ohjelman lopetus
-
+	} while (valinta != 3);		
+	
+	// Poistetaan tiedot.
 	poistaTiedot();
 
 	return 0;
 }
 
+// Aliohjelmien m‰‰rittelyt
 void introkuva()
 {
+	// Introkuva.
+	// ASCII ART!
 	printf("                     _______  _______           _       _________\n");	
 	printf("           |\\     /|(  ____ \\(       )|\\     /|( \\      \\__   __/\n");
 	printf("           | )   ( || (    \\/| () () || )   ( || (         ) (   \n");
@@ -95,15 +103,18 @@ void introkuva()
 	printf("           |  ___  ||  __)   | |(_)| || |   | || |         | |   \n");
 	printf("           | (   ) || (      | |   | || |   | || |         | |   \n");
 	printf("           | )   ( || (____/\\| )   ( || (___) || (____/\\___) (___\n");
-	printf("           |/     \\|(_______/|/     \\|(_______)(_______/\\_______/\n\n\n");
+	printf("           |/     \\|(_______/|/     \\|(_______)(_______/\\_______/\n\n");
+	printf("             ##########  H A H M O A K A T E M I A  ##########      \n\n");
+	printf("                              Sankareita: %d\n", sankareita);
 }
 
 int paavalikko()
 {
+	// P‰‰valikko.
 	int valinta = 0;
 
-	printf("Sankareita: %d\n", sankareita);
-	printf("\nHahmoakatemia Hemuli!\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
+	introkuva();
+	printf("\nP\x84\x84valikko\n\n1. Luo hahmo\n2. Selaa hahmoja\n3. Lopeta\n");
 	
 	while (scanf_s("%d", &valinta) == 0 || valinta < 1 || valinta > 3)
 	{
@@ -117,45 +128,34 @@ int paavalikko()
 
 int luonti()
 {
+	// Hahmonluonti.
+	// Funktiossa luodaan hahmo askel kerrallaan.
+	// Valmis hahmo esitell‰‰n lopuksi esikatselussa.
 	sankarit = realloc(sankarit, sizeof(sankari) * ++sankareita);
 
 	int hahmoID = sankareita - 1;
 	
-	printf("Hahmonluonti!\n\nSy\x94t\x84 hahmon nimi (max. %d merkki\x84. >", MERKIT-1);
+	printf("Hahmonluonti\n\nSy\x94t\x84 hahmon nimi (max. %d merkki\x84.)\n", MERKIT-1);
 	fflush(stdin);
 	gets_s(sankarit[hahmoID].nimi, MERKIT);
 
 	system("cls");
-	
 	rodunValinta(hahmoID);
-	
 	system("cls");
-
 	luokanValinta(hahmoID);
-
-	printf("\n\nOminaisuudet:\n\n");
-	for (int i = 0; i < OMINAISUUDET; i++)
-	{
-		sankarit[hahmoID].ominaisuudet[i] = rotuArvot[sankarit[hahmoID].rotu][i];
-		printf("%s: %d\n", ominaisuudet[i], sankarit[hahmoID].ominaisuudet[i]);
-	}
-
-	pisteet(hahmoID);
-
-	system("cls");
-	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\n\nSeuraavaksi p\x84\x84set edunvalintaan.\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
+	ominaisuuksienValinta(hahmoID);
 	system("pause");
-
 	edunValinta(hahmoID);
-
 	tallennus();
-
 	system("cls");
+
 	return esikatselu(hahmoID);
 }
 
 void rodunValinta(int hahmoID)
 {
+	// Rodun valinta.
+	// Valitaan hahmolle rotu annetuista vaihtoehdoista.
 	printf("Sankari: %s", sankarit[hahmoID].nimi);
 
 	printf("\n\nValitse rotu.\n\n");
@@ -174,6 +174,8 @@ void rodunValinta(int hahmoID)
 
 void luokanValinta(int hahmoID)
 {
+	// Luokan valinta.
+	// Valitaan hahmolle luokka annetuista vaihtoehdoista.
 	printf("Sankari: %s\n", sankarit[hahmoID].nimi);
 	printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
 
@@ -190,8 +192,16 @@ void luokanValinta(int hahmoID)
 	sankarit[hahmoID].luokka--;
 }
 
-void pisteet(int hahmoID)
+void ominaisuuksienValinta(int hahmoID)
 {
+	// Ominaisuuksien valinta.
+	// Ensin alustetaan ominaisuudet rodun oletusarvoilla.
+	for (int i = 0; i < OMINAISUUDET; i++)
+	{
+		sankarit[hahmoID].ominaisuudet[i] = rotuArvot[sankarit[hahmoID].rotu][i];
+	}
+
+	// Sitten laitetaan omat pisteet p‰‰lle.
 	for (int j = OMINAISUUDET; j > 0; j--)
 	{
 		system("cls");
@@ -210,10 +220,22 @@ void pisteet(int hahmoID)
 
 		sankarit[hahmoID].ominaisuudet[--valinta]++;
 	}
+
+	// Kirjoitetaan yhteenveto.
+	system("cls");
+	printf("Sankari: %s\n", sankarit[hahmoID].nimi);
+	printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
+	printf("Luokka: %s\n\n", luokat[sankarit[hahmoID].luokka]);
+	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\n\nSeuraavaksi p\x84\x84set edunvalintaan.\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
 }
 
 void edunValinta(int hahmoID)
 {
+	// Edun valinta.
+	// Valitaan hahmolle edut annetuista vaihtoehdoista.
+	// Yhden edun voi valita vain kerran.
+
+	// Alustetaan ensin etutaulukko -1:ll‰ (tarvitaan myˆhemmin tarkistuksessa).
 	for (int i = 0; i < EDUT; i++)
 	{
 		sankarit[hahmoID].edut[i] = -1;
@@ -226,8 +248,10 @@ void edunValinta(int hahmoID)
 		system("cls");
 		printf("Valitse %d. etu: \n", i + 1);
 
+		// Kirjoitetaan valittavat edut n‰ytˆlle.
 		for (int j = 0; j < EDUT_MAX; j++)
 		{
+			// Skipataan edut jotka k‰ytt‰j‰ on jo valinnut.
 			if (!etuValittu(hahmoID, j)) printf("%d. %s:   %s\n", j + 1, edut[j], edutSelitykset[j]);
 		}
 
@@ -256,17 +280,20 @@ int etuValittu(int hahmoID, int etu)
 
 int selaus()
 {
+	// Hahmojen selaus.
+	// Valitaan haluttu hahmo listalta ja n‰ytet‰‰n sen ominaisuudet (esikatselu).
+
 	int valinta = 0;
 	do
 	{
-		printf("Hemuli-hahmonluontity\x94kalu!\nValitse hahmo\n\n", sankareita);
+		printf("Hahmojen selaus\nValitse hahmo\n\n", sankareita);
 
 		for (int i = 0; i < sankareita; i++)
 		{
 			printf("%d: %s\n", i + 1, sankarit[i].nimi);
 		}
 
-		printf("0. P\x84\x84valikko");
+		printf("0. P\x84\x84valikko\n");
 
 		scanf_s("%d", &valinta);
 		printf("\n");
@@ -287,9 +314,10 @@ int selaus()
 
 int esikatselu(int hahmoID)
 {
+	// N‰ytet‰‰n hahmon "hahmoID" tiedot.
 	int valinta = 0;
 
-	printf("Esikatselu!\n\n");
+	printf("Esikatselu\n\n");
 
 	printf("Sankari: %s\n", sankarit[hahmoID].nimi);
 	printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
@@ -314,9 +342,9 @@ int esikatselu(int hahmoID)
 		if (i != EDUT - 1) printf(", ");
 	}
 
-	printf("\n\n1. Poista\n2. Takaisin selaukseen\n0. P\x84\x84valikko");
+	printf("\n\n1. Poista\n2. Takaisin selaukseen\n0. P\x84\x84valikko\n");
 
-	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 3)
+	while (scanf_s("%d", &valinta) == 0 || valinta < 0 || valinta > 2)
 	{
 		printf("Virheellinen sy\x94te! Yrit\x84 uudelleen: > ");
 		fflush(stdin);
@@ -337,20 +365,30 @@ int esikatselu(int hahmoID)
 
 void lataus()
 {
+	// Ladataan data (hahmot ja tekstit) tiedostoista.
+
+	// Ladataan hahmot.
 	FILE *Hahmot;
 	fopen_s(&Hahmot, "hahmot.txt", "r");
 
 	if (Hahmot != 0)
 	{
+		// Luetaan sankareiden lukum‰‰r‰.
 		fscanf_s(Hahmot, "%d\n", &sankareita);
 
+		// Luodaan dynaamisesti taulukko johon sankarit mahtuvat.
 		sankarit = malloc(sizeof(sankari) * sankareita);
 
 		for (int i = 0; i < sankareita; i++)
 		{
+			// Luetaan nimi.
 			char temp[MERKIT];
 			fgets(temp, MERKIT, Hahmot);
+
+			// Kopioidaan nimi hahmolle. Viimeinen merkki eli rivinvaihto j‰tet‰‰n pois.
 			strncpy_s(sankarit[i].nimi, strlen(temp), temp, strlen(temp) - 1);
+
+			// Luetaan muut tiedot.
 			fscanf_s(Hahmot, "%d\n", &sankarit[i].rotu);
 			fscanf_s(Hahmot, "%d\n", &sankarit[i].luokka);
 			for (int j = 0; j < EDUT; j++)
@@ -365,12 +403,12 @@ void lataus()
 		fclose(Hahmot);
 	}
 
+	// Ladataan tekstit.
 	lataaTiedot("data\\rodut.txt", rodut, RODUT);
 	lataaTiedot("data\\luokat.txt", luokat, LUOKAT);
 	lataaTiedot("data\\edut.txt", edut, EDUT_MAX);
 	lataaTiedot("data\\edut_selitykset.txt", edutSelitykset, EDUT_MAX);
 	lataaTiedot("data\\ominaisuudet.txt", ominaisuudet, OMINAISUUDET);
-
 	lataaTiedot("data\\taidot_soturi.txt", taidot[0], TAIDOT);
 	lataaTiedot("data\\taidot_metsastaja.txt", taidot[1], TAIDOT);
 	lataaTiedot("data\\taidot_velho.txt", taidot[2], TAIDOT);
@@ -382,6 +420,7 @@ void lataus()
 
 void lataaTiedot(char *polku, char *taulukko[], int koko)
 {
+	// Lataa tekstit tiedostosta "*polku" ja tallentaa ne taulukkoon "*taulukko[]".
 	FILE *tiedosto;
 	fopen_s(&tiedosto, polku, "r");
 
@@ -389,9 +428,11 @@ void lataaTiedot(char *polku, char *taulukko[], int koko)
 	{
 		for (int i = 0; i < koko; i++)
 		{
+			// Luodaan uusi merkkijono "temp" ja luetaan siihen tiedostosta rivi.
 			char temp[MERKIT];
 			fgets(temp, MERKIT, tiedosto);
 
+			// K‰yd‰‰n teksti l‰pi merkki kerrallaan ja asetetaan mahdolliset ‰‰kkˆset manuaalisesti.
 			for (unsigned int i = 0; i < strlen(temp); i++)
 			{
 				if (temp[i] == -28) temp[i] = '\x84';
@@ -400,8 +441,10 @@ void lataaTiedot(char *polku, char *taulukko[], int koko)
 				else if (temp[i] == -42) temp[i] = '\x99';
 			}
 
+			// Varataan taulukkoon tilaa tekstin pituuden verran.
 			taulukko[i] = malloc(sizeof(char)*strlen(temp));
 
+			// Kopioidaan teksti taulukkoon (j‰tet‰‰n viimeinen merkki eli rivinvaihto pois).
 			strncpy_s(taulukko[i], strlen(temp), temp, strlen(temp) - 1);
 		}
 
@@ -411,6 +454,7 @@ void lataaTiedot(char *polku, char *taulukko[], int koko)
 
 void tallennus()
 {
+	// Tallennetaan hahmot tiedostoon "hahmo.txt".
 	FILE *Hahmot;
 	fopen_s(&Hahmot, "hahmot.txt", "w");
 
@@ -439,9 +483,13 @@ void tallennus()
 
 int poisto(int hahmoID)
 {
+	// Poistetaan hahmo "hahmoID" taulukosta.
+	// Lopuksi tallennetaan muokattu taulukko.
+
 	char valinta;
 	printf("Hahmo %s poistetaan.\n", sankarit[hahmoID].nimi);
 
+	// Varmistetaan k‰ytt‰j‰lt‰ ett‰ poistaminen on se mit‰ t‰ss‰ haetaan.
 	do 
 	{
 		printf("(Y/N) > ");
@@ -454,9 +502,11 @@ int poisto(int hahmoID)
 		case 'y':
 		case 'Y': 
 		{
+			// Luodaan yhden pienempi taulukko kun nyt on sankareita.
 			sankari *taulukko;
 			taulukko = malloc(sizeof(sankari) * sankareita - 1);
 
+			// Kopioidaan kaikki sankarit paitsi poistettava juuri luotuun taulukkoon.
 			for (int i = 0, j = 0; i < sankareita; i++)
 			{
 				if (i != hahmoID)
@@ -466,10 +516,14 @@ int poisto(int hahmoID)
 				}
 			}
 
+			// Poistetaan nykyinen sankaritaulukko.
 			free(sankarit);
+
+			// Asetetaan sankarit-osoitin osoittamaan uuteen taulukkoon. V‰hennet‰‰n sankareiden lukum‰‰r‰‰ yhdell‰.
 			sankarit = taulukko;
 			sankareita -= 1;
 
+			// Tallennetaan sankarit.
 			tallennus();
 
 			break;
@@ -483,8 +537,10 @@ int poisto(int hahmoID)
 void poistaTiedot()
 {
 	// T‰m‰ funktio vapauttaa kaiken dynaamisesti varatun tilan.
+	// Sankarit.
 	free(sankarit);
 
+	// Rodut, luokat, edut, etujen selitykset ja taidot.
 	for (int i = 0; i < RODUT; i++)
 	{
 		free(rodut[i]);
