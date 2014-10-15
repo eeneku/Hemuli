@@ -34,7 +34,7 @@ void ominaisuuksienValinta(int hahmoID);
 void rodunValinta(int hahmoID);
 void luokanValinta(int hahmoID);
 void edunValinta(int hahmoID);
-int etuValittu(int hahmfgoID, int etu);
+int etuValittu(int hahmoID, int etu);
 void lataaTiedot(char *polku, char *taulukko[], int koko);
 void poistaTiedot();
 
@@ -91,7 +91,7 @@ int main()
 	return 0;
 }
 
-// Aliohjelmien m‰‰rittelyt
+// Aliohjelmien m‰‰rittelyt.
 void introkuva()
 {
 	// Introkuva.
