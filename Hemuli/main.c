@@ -34,7 +34,7 @@ void ominaisuuksienValinta(int hahmoID);
 void rodunValinta(int hahmoID);
 void luokanValinta(int hahmoID);
 void edunValinta(int hahmoID);
-int etuValittu(int hahmfgoID, int etu);
+int etuValittu(int hahmoID, int etu);
 void lataaTiedot(char *polku, char *taulukko[], int koko);
 void poistaTiedot();
 
@@ -210,7 +210,7 @@ void ominaisuuksienValinta(int hahmoID)
 		printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
 		printf("Luokka: %s\n\n", luokat[sankarit[hahmoID].luokka]);
 
-		printf("Hahmosi ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\nSinulla on %d pistett\x84 k\x84ytett\x84viss\x84 vapaasti valitsemiisi ominaisuuksiin.\nPisteet asetetaan yksi kerrallaan.\n\n1.Voimaa\n2.Taitoa\n3.\x8elykkyytt\x84\n4.Onnea\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
+		printf("Hahmosi ominaisuudet ovat:\nVoima: %d\nTaito: %d\n\x8elykkyys: %d\nOnni: %d\n\nSinulla on %d pistett\x84 k\x84ytett\x84viss\x84 vapaasti valitsemiisi ominaisuuksiin.\nPisteet asetetaan yksi kerrallaan.\n\n1. Voimaa\n2. Taitoa\n3. \x8elykkyytt\x84\n4. Onnea\n\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3], j);
 
 		while (scanf_s("%d", &valinta) == 0 || valinta < 1 || valinta > 4)
 		{
@@ -226,7 +226,7 @@ void ominaisuuksienValinta(int hahmoID)
 	printf("Sankari: %s\n", sankarit[hahmoID].nimi);
 	printf("Rotu: %s\n", rodut[sankarit[hahmoID].rotu]);
 	printf("Luokka: %s\n\n", luokat[sankarit[hahmoID].luokka]);
-	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima:%d\nTaito:%d\n\x8elykkyys:%d\nOnni:%d\n\n\nSeuraavaksi p\x84\x84set edunvalintaan.\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
+	printf("Hahmosi lopulliset ominaisuudet ovat:\nVoima: %d\nTaito: %d\n\x8elykkyys: %d\nOnni: %d\n\n\nSeuraavaksi p\x84\x84set edunvalintaan.\n", sankarit[hahmoID].ominaisuudet[0], sankarit[hahmoID].ominaisuudet[1], sankarit[hahmoID].ominaisuudet[2], sankarit[hahmoID].ominaisuudet[3]);
 }
 
 void edunValinta(int hahmoID)
@@ -290,7 +290,7 @@ int selaus()
 
 		for (int i = 0; i < sankareita; i++)
 		{
-			printf("%d: %s\n", i + 1, sankarit[i].nimi);
+			printf("%d. %s\n", i + 1, sankarit[i].nimi);
 		}
 
 		printf("0. P\x84\x84valikko\n");
