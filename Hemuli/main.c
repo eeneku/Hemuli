@@ -91,7 +91,7 @@ int main()
 	return 0;
 }
 
-// Aliohjelmien m‰‰rittelyt
+// Aliohjelmien m‰‰rittelyt.
 void introkuva()
 {
 	// Introkuva.
